@@ -2,7 +2,7 @@
     <div class="sidebar-header">
         <div class="d-flex justify-content-between">
             <div class="logo">
-                <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                <a href="index.html"><img src="{{ asset('build/images/logo/LogoNova1.jpg') }}" alt="Logo" srcset=""></a>
             </div>
             <div class="toggler">
                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -10,6 +10,122 @@
         </div>
     </div>
     <div class="sidebar-menu">
+        <ul class="menu">
+
+            <li class="sidebar-item  active">
+                <a href="index.html" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Configuración</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="component-alert.html">Lista</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-badge.html">Creacion</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-people"></i>
+                    <span>Usuarios</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="component-alert.html">Lista</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="component-badge.html">Creacion</a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-collection"></i>
+                    <span>Presentacion</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="extra-component-avatar.html">Lista</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="extra-component-sweetalert.html">Crear</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-menu-button-wide-fill"></i>
+                    <span>Menu sitio</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Default Layout</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Páginas</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Default Layout</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-collection-fill"></i>
+                    <span>Categorías</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Default Layout</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-box-seam"></i>
+                    <span>Productos</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Default Layout</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+        </ul>
         {#<ul class="menu">{% for sidebarItem in sidebarItems %}{% if sidebarItem.isTitle %}
                 <li class="sidebar-title">{{sidebarItem.name}}</li>
             {% else %}

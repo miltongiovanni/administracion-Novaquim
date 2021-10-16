@@ -29,7 +29,8 @@
         font-weight: bold;
 
         img {
-            height: 1.2rem;
+            width: 80%;
+            height: auto;
         }
     }
     .sidebar-toggler.x {
@@ -58,7 +59,7 @@
             padding: .7rem 1rem;
             font-size: 1rem;
             display: flex;
-            align-items: center;
+            align-items: normal;
             border-radius: .5rem;
             transition: all .5s;
             text-decoration: none;
