@@ -12,7 +12,7 @@
     <div class="sidebar-menu">
         <ul class="menu">
 
-            <li class="sidebar-item  active">
+            <li class="sidebar-item">
                 <a href="index.html" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Inicio</span>
@@ -33,27 +33,27 @@
                     </li>
                 </ul>
             </li>
-
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-people"></i>
-                    <span>Usuarios</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="component-alert.html">Lista</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="component-badge.html">Creacion</a>
-                    </li>
-                </ul>
-            </li>
-
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="sidebar-item  has-sub active">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-people"></i>
+                        <span>Usuarios</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="{{ path('user_index') }}">Lista</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ path('user_new') }}">Creación</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
 
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-collection"></i>
-                    <span>Presentacion</span>
+                    <span>Presentación</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
@@ -124,9 +124,8 @@
             </li>
 
 
-
         </ul>
-        {#<ul class="menu">{% for sidebarItem in sidebarItems %}{% if sidebarItem.isTitle %}
+        {# <ul class="menu">{% for sidebarItem in sidebarItems %}{% if sidebarItem.isTitle %}
                 <li class="sidebar-title">{{sidebarItem.name}}</li>
             {% else %}
                 <li class="sidebar-item {{ 'active' if (sidebarItem.url == filename or filename|startsWith(sidebarItem.key)) }} {{'has-sub' if sidebarItem.submenu.length > 0 }}">
@@ -141,7 +140,7 @@
                     </ul>{% endif %}
                 </li>
             {% endif %}{% endfor %}
-        </ul>#}
+        </ul> #}
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 </div>

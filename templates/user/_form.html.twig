@@ -1,4 +1,130 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical needs-validation" method="post" novalidate
+                          action="{% if user.id is defined %}{{ path('user_update', {'id':  user.id }) }}{% else %}{{ path('user_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" placeholder="nombre@example.com"
+                                                   id="email" name="email"
+                                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+                                                   value="{% if user.email is defined %}{{ user.email }}{% endif %}">
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">
+                                                Escriba un correo válido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group has-icon-left">
+                                        <label for="role">Perfil</label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="role" name="role" required>
+                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                    Seleccione le rol
+                                                </option>
+                                                <option value="ROLE_ADMIN" {% if user.roles is defined and 'ROLE_ADMIN' in user.roles %} selected {% endif %}>
+                                                    Administrador
+                                                </option>
+                                                <option value="ROLE_USER" {% if user.roles is defined and 'ROLE_USER' in user.roles %} selected {% endif %}>
+                                                    Usuario
+                                                </option>
+                                            </select>
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">
+                                                Seleccione un perfil.
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="password-id-icon">Contraseña</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" placeholder="Password" pattern=".{8,}" title="Ocho o más caracteres"
+                                                   id="password" name="password" {% if action=='insert' %} required {% endif %}>
+                                            <div class="invalid-feedback" id="passwordMessage">
+                                                Ocho o más caracteres.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="password-id-icon">Confirmar contraseña</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" placeholder="Password" pattern=".{8,}" title="Ocho o más caracteres"
+                                                   id="password-confirmation" name="password-confirmation" {% if action=='insert' %} required {% endif %}>
+                                            <div class="invalid-feedback" id="valPasswordMessage">
+                                                Ocho o más caracteres
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset"
+                                            class="btn btn-light-secondary me-1 mb-1">Reiniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block js %}
+    <script>
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        console.log(form["password"].value);
+                        console.log(form["password-confirmation"].value);
+                        //Validacion de password
+                        if (form["action"].value == 'insert' &&  form["password"].value == ''){
+                            document.getElementById('passwordMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        if (form["action"].value == 'insert' &&  form["password-confirmation"].value == ''){
+                            document.getElementById('valPasswordMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        if (form["password"].value !='' && form["password-confirmation"].value !=''){
+                            if (form["password"].value!=form["password-confirmation"].value){
+                                document.getElementById('valPasswordMessage').innerHTML = 'Los valores no coinciden';
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                        }
+
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+{% endblock %}

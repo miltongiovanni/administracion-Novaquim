@@ -1,18 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Lista de usuarios{% endblock %}
 
-{% block body %}
-    <h1>User index</h1>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('usersDatatables') }}
+{% endblock %}
 
-    <table class="table">
+{% block content %}
+    <h1>Lista de usuarios</h1>
+
+    <table class="table" id="example">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Email</th>
+                <th>Correo electrónico</th>
                 <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
+                <th>Contraseña</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -23,8 +28,15 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('user_show', {'id': user.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('user_edit', {'id': user.id}) }}">Editar</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +47,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('user_new') }}">Crear usuario</a>
+{% endblock %}
+
+{% block js %}
 {% endblock %}

@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,11 +28,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/new", name="user_new", methods={"GET"})
      */
     public function new(Request $request): Response
     {
-        $user = new User();
+        /*$user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -40,11 +42,10 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-        }
+        }*/
 
         return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
+            'action' => 'insert',
         ]);
     }
 
@@ -59,23 +60,77 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="user_edit", methods={"GET"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, int $id, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $currentUser = $this->getUser($id);
+        $user = $userRepository->find($id);
+
+        return $this->renderForm('user/edit.html.twig', [
+            'user' => $user,
+            'action' => 'update',
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/update", name="user_update", methods={"POST"})
+     */
+    public function update(Request $request, int $id, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    {
+        if ($id == 0) {
+            $user = new User();
+        } else {
+            $user = $userRepository->find($id);
+        }
+        $action = $request->request->get('action');
+        $user->setEmail($request->request->get('email'));
+        $user->setRoles([$request->request->get('role')]);
+        $plaintextPassword = $request->request->get('password', false);
+        $plaintextPasswordConfirmation = $request->request->get('password-confirmation', false);
+        if ($plaintextPassword) {
+            if ($plaintextPassword == $plaintextPasswordConfirmation) {
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hashedPassword);
+            }
+        }
+        $entityManager->persist($user);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+//check email  IMPORTANT
+        /*if ($email = $request->request->get('email', false)) {
+            if ($followId == 0) {
+                if ($soiAppSuppliersUsersRepository->findOneBy(['email' => $email]) != null) {
+                    $response = new JsonResponse(['idUser' => $user->getIdUser(), 'success' => false, 'message' => $this->ocTranslator->trans('users.exist.error')]);
+                    return $response;
+                }
+            }
+            if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $user->setEmail(trim($email));
+                $user->setUsername(trim($email));
+            } else {
+                $response = new JsonResponse(['idUser' => $user->getIdUser(), 'success' => false, 'message' => $this->ocTranslator->trans('users.email.send.error')]);
+                return $response;
+            }
+
+
+        }*/
+
+        /*$form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-        }
+        }*/
+        $this->addFlash('success', 'Usuario actualizado correctamente');
+        $this->addFlash('error', ' Error al acualizar el Usuario');
+        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
 
-        return $this->renderForm('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
     }
 
     /**
@@ -83,7 +138,7 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
