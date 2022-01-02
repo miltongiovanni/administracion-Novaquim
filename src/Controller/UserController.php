@@ -127,8 +127,13 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
         }*/
-        $this->addFlash('success', 'Usuario actualizado correctamente');
-        $this->addFlash('error', ' Error al acualizar el Usuario');
+        if ($action=='insert'){
+            $this->addFlash('success', 'Usuario creado correctamente');
+        }else{
+            $this->addFlash('success', 'Usuario actualizado correctamente');
+        }
+
+        //$this->addFlash('error', ' Error al actualizar el Usuario');
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
 
     }

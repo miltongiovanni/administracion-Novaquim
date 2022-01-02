@@ -3,11 +3,11 @@
 {% block title %}Modificar usuario{% endblock %}
 
 {% block content %}
-    <h2>Editar usuario</h2>
+    <h2 class="ps-3">Editar usuario</h2>
     {{ dump(user) }}
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('user_index') }}">Volver a la lista</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

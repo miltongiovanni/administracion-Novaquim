@@ -25,7 +25,13 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>
+                    {% if user.roles is defined %}
+                        {% for rol in user.roles %}
+                            <span class="rol">{{ rol }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </td>
                 <td>{{ user.password }}</td>
                 <td>
                     <div class="dropdown">
