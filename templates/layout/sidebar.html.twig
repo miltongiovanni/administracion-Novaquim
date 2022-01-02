@@ -10,6 +10,7 @@
         </div>
     </div>
     <div class="sidebar-menu">
+
         <ul class="menu">
 
             <li class="sidebar-item">
@@ -18,32 +19,33 @@
                     <span>Inicio</span>
                 </a>
             </li>
-
-            <li class="sidebar-item  has-sub">
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="sidebar-item {{ (app.request.uri ends with path('configuration_index') or app.request.uri ends with path('configuration_new')) ? 'active' : '' }} has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-gear-fill"></i>
                     <span>Configuración</span>
                 </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="component-alert.html">Lista</a>
+                <ul class="submenu {{ (app.request.uri ends with path('configuration_index')) ? 'active' : '' }}">
+                    <li class="submenu-item {{ (app.request.uri ends with path('configuration_index')) ? 'active' : '' }}">
+                        <a href="{{ path('configuration_index') }}">Lista</a>
                     </li>
-                    <li class="submenu-item ">
-                        <a href="component-badge.html">Creacion</a>
+                    <li class="submenu-item {{ (app.request.uri ends with path('configuration_new')) ? 'active' : '' }}">
+                        <a href="{{ path('configuration_new') }}">Creación</a>
                     </li>
                 </ul>
             </li>
+            {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
-                <li class="sidebar-item  has-sub active">
+                <li class="sidebar-item  has-sub {{ (app.request.uri ends with path('user_index') or app.request.uri ends with path('user_new')) ? 'active' : ''  }}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-people"></i>
                         <span>Usuarios</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
+                    <ul class="submenu {{ (app.request.uri ends with path('user_index') or app.request.uri ends with path('user_new')) ? 'active' : ''  }}">
+                        <li class="submenu-item {{ (app.request.uri ends with path('user_index')) ? 'active' : ''  }}">
                             <a href="{{ path('user_index') }}">Lista</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item {{ (app.request.uri ends with path('user_new')) ? 'active' : ''  }}">
                             <a href="{{ path('user_new') }}">Creación</a>
                         </li>
                     </ul>
