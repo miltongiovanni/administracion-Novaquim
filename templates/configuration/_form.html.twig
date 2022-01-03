@@ -1,4 +1,85 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical needs-validation" method="post" novalidate
+                          action="{% if configuration.id is defined %}{{ path('configuration_update', {'id':  configuration.id }) }}{% else %}{{ path('configuration_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description">Variable</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="description" name="description"
+                                                   required
+                                                   value="{% if configuration.description is defined %}{{ configuration.description }}{% endif %}">
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback" id="descriptionMessage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group ">
+                                        <label for="value">Valor</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control"
+                                                   id="value" name="value" required
+                                                   value="{% if configuration.value is defined %}{{ configuration.value }}{% endif %}">
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback" id="valueMessage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset"
+                                            class="btn btn-light-secondary me-1 mb-1">Reiniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block js %}
+    <script>
+        (function () {
+            'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        console.log(form["description"].value);
+                        console.log(form["value"].value);
+                        //Validacion
+                        if (form["description"].value == '') {
+                            document.getElementById('descriptionMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        if (form["value"].value == '') {
+                            document.getElementById('valueMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+{% endblock %}

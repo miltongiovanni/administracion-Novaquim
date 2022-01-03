@@ -4,13 +4,13 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('usersDatatables') }}
+    {{ encore_entry_script_tags('pagesDatatables') }}
 {% endblock %}
 
 {% block content %}
     <h1>Lista de usuarios</h1>
 
-    <table class="table" id="example">
+    <table class="table" id="usersDatatable">
         <thead>
             <tr>
                 <th>Id</th>

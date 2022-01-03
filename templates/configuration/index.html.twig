@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lista de configuraciones{% endblock %}
+{% block title %}Lista de variables de configuración{% endblock %}
 
-{% block body %}
-    <h1>Lista de configuraciones</h1>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('pagesDatatables') }}
+{% endblock %}
 
-    <table class="table">
+{% block content %}
+    <h1>Lista de variables de configuración</h1>
+
+    <table class="table" id="configurationsDatatable">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Description</th>
-                <th>Value</th>
-                <th>actions</th>
+                <th>Variable</th>
+                <th>Valor</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +26,24 @@
                 <td>{{ configuration.description }}</td>
                 <td>{{ configuration.value }}</td>
                 <td>
-                    <a href="{{ path('configuration_show', {'id': configuration.id}) }}">show</a>
-                    <a href="{{ path('configuration_edit', {'id': configuration.id}) }}">edit</a>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('configuration_show', {'id': configuration.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('configuration_edit', {'id': configuration.id}) }}">Editar</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No hay datos</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('configuration_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('configuration_new') }}">Adicionar configuración</a>
 {% endblock %}

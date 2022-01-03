@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Configuration{% endblock %}
+{% block title %}Nueva variable de configuración{% endblock %}
 
-{% block body %}
-    <h1>Create new Configuration</h1>
+{% block content %}
+    <h2 class="ps-3">Nueva variable de configuración</h2>
 
     {{ include('configuration/_form.html.twig') }}
 
-    <a href="{{ path('configuration_index') }}">back to list</a>
+    <a class="btn btn-primary ms-3" href="{{ path('configuration_index') }}">Volver a la lista</a>
 {% endblock %}
