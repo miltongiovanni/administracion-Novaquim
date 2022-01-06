@@ -4,18 +4,18 @@
             <div class="card-content">
                 <div class="card-body">
                     <form class="form form-vertical needs-validation" method="post" novalidate
-                          action="{% if configuration.id is defined %}{{ path('configuration_update', {'id':  configuration.id }) }}{% else %}{{ path('configuration_update', {'id':  0 }) }}{% endif %}"
+                          action="{% if category.id is defined %}{{ path('category_update', {'id':  category.id }) }}{% else %}{{ path('category_update', {'id':  0 }) }}{% endif %}"
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="description">Variable</label>
+                                        <label for="name">Nombre</label>
                                         <div class="position-relative has-validation">
-                                            <input type="text" class="form-control" id="description" name="description"
+                                            <input type="text" class="form-control" id="name" name="name"
                                                    required
-                                                   value="{% if configuration.description is defined %}{{ configuration.description }}{% endif %}">
+                                                   value="{% if category.name is defined %}{{ category.name }}{% endif %}">
                                             <div class="valid-feedback">Válido.</div>
                                             <div class="invalid-feedback" id="descriptionMessage">
                                             </div>
@@ -24,11 +24,11 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group ">
-                                        <label for="value">Valor</label>
+                                        <label for="slug">Slug</label>
                                         <div class="position-relative has-validation">
                                             <input type="text" class="form-control"
-                                                   id="value" name="value" required
-                                                   value="{% if configuration.value is defined %}{{ configuration.value }}{% endif %}">
+                                                   id="slug" name="slug" required
+                                                   value="{% if category.slug is defined %}{{ category.slug }}{% endif %}">
                                             <div class="valid-feedback">Válido.</div>
                                             <div class="invalid-feedback" id="valueMessage">
                                             </div>
@@ -67,12 +67,12 @@
                         console.log(form["description"].value);
                         console.log(form["value"].value);
                         //Validacion
-                        if (form["description"].value == '') {
+                        if (form["name"].value == '') {
                             document.getElementById('descriptionMessage').innerHTML = 'Este valor es requerido';
                             event.preventDefault()
                             event.stopPropagation()
                         }
-                        if (form["value"].value == '') {
+                        if (form["slug"].value == '') {
                             document.getElementById('valueMessage').innerHTML = 'Este valor es requerido';
                             event.preventDefault()
                             event.stopPropagation()

@@ -52,61 +52,19 @@
                 </li>
             {% endif %}
 
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-collection"></i>
-                    <span>Presentación</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="extra-component-avatar.html">Lista</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="extra-component-sweetalert.html">Crear</a>
-                    </li>
-                </ul>
-            </li>
 
-            <li class="sidebar-item has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-menu-button-wide-fill"></i>
-                    <span>Menu sitio</span>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
-                        <a href="layout-default.html">Default Layout</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="layout-vertical-1-column.html">1 Column</a>
-                    </li>
-                </ul>
-            </li>
 
-            <li class="sidebar-item has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-layout-text-window-reverse"></i>
-                    <span>Páginas</span>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
-                        <a href="layout-default.html">Default Layout</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="layout-vertical-1-column.html">1 Column</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item has-sub">
+            <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'category_index' or app.request.attributes.get('_route') == 'category_new') ? 'active' : ''  }}">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
                     <span>Categorías</span>
                 </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
-                        <a href="layout-default.html">Default Layout</a>
+                <ul class="submenu {{ (app.request.attributes.get('_route') == 'category_index' or app.request.attributes.get('_route') == 'category_new') ? 'active' : ''  }}">
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'category_index') ? 'active' : ''  }}">
+                        <a href="{{ path('category_index') }}">Lista</a>
                     </li>
-                    <li class="submenu-item ">
-                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'category_new') ? 'active' : ''  }}">
+                        <a href="{{ path('category_new') }}">Creación</a>
                     </li>
                 </ul>
             </li>
@@ -126,6 +84,48 @@
             </li>
 
 
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-menu-button-wide-fill"></i>
+                    <span>Menu sitio</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Default Layout</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-collection"></i>
+                    <span>Presentación</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="extra-component-avatar.html">Lista</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="extra-component-sweetalert.html">Crear</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Páginas</span>
+                </a>
+                <ul class="submenu">
+                    <li class="submenu-item ">
+                        <a href="layout-default.html">Default Layout</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         {# <ul class="menu">{% for sidebarItem in sidebarItems %}{% if sidebarItem.isTitle %}
                 <li class="sidebar-title">{{sidebarItem.name}}</li>

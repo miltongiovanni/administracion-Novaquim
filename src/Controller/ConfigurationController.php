@@ -58,6 +58,7 @@ class ConfigurationController extends AbstractController
             'action' => 'update',
         ]);
     }
+
     /**
      * @Route("/{id}/update", name="configuration_update", methods={"POST"})
      */

@@ -1,0 +1,44 @@
+<form method="post" action="{{ path('category_delete', {'id': category.id}) }}" id="deleteCategoryForm">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+    <button class="btn btn-danger mt-3" type="button" onclick="confirmation(document.getElementById('deleteCategoryForm'), '¿Está seguro de borrar la categoría?')">Borrar categoría</button>
+</form>
+
+
+{% block js %}
+    <script>
+        function confirmation(form, text) {
+            swal({
+                title: "Confirmación",
+                text: text,
+                icon: "info",
+                buttons: {
+                    cancel: {
+                        text: "No",
+                        value: null,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Si",
+                        value: true,
+                        visible: true,
+                        className: "",
+                        closeModal: true
+                    }
+                },
+            }).then((value) => {
+                if (value) {
+                    /*swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                    });*/
+                    form.submit();
+                } else {
+                    /*swal("Your imaginary file is safe!");*/
+                    return false;
+                }
+            });
+        }
+
+    </script>
+{% endblock %}
