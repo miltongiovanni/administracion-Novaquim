@@ -22,7 +22,16 @@ Encore
         // only copy files matching this pattern
         pattern: /\.(png|jpg|jpeg|ico)$/
     })
-
+    // copy tinymce's skin files
+    .copyFiles({
+        from: 'node_modules/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
+    // copy tinymce's lang
+    .copyFiles({
+        from: './assets/js/langs',
+        to: 'Langs/[path]/[name].[ext]'
+    })
     // public path used by the web server to access the output path
     .setPublicPath('/build')
 
@@ -37,8 +46,9 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('producto', './assets/js/pages/producto.js')
     .addEntry('pagesDatatables', './assets/js/pages/pagesDatatables.js')
-
+    .addStyleEntry('product', './assets/styles/pages/product.scss')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 

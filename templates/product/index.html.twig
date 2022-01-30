@@ -1,22 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}Lista de productos{% endblock %}
 
-{% block body %}
-    <h1>Product index</h1>
+{% block stylesheets %}
+    {{ parent() }}
 
-    <table class="table">
+    {{ encore_entry_link_tags('product') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('pagesDatatables') }}
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de productos</h1>
+
+    <table class="table" id="productosDatatable">
         <thead>
             <tr>
-                <th>Id</th>
+                <th class="text-center">Id</th>
                 <th>Title</th>
-                <th>Meta_title</th>
-                <th>Meta_description</th>
-                <th>Image_1</th>
-                <th>Image_2</th>
-                <th>Image_3</th>
-                <th>Description</th>
-                <th>actions</th>
+                <th>Categoría</th>
+                <th class="text-center">Imagen</th>
+                <th>Descripción corta</th>
+                <th>Slug</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,15 +33,20 @@
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.title }}</td>
-                <td>{{ product.metaTitle }}</td>
+                <td>{{ product.category.name }}</td>
+                <td><img class="img-list" src="{{ app_url }}{{ 'uploads/images/' }}{{ product.image1 }}" alt="{{ product.title }}"></td>
                 <td>{{ product.metaDescription }}</td>
-                <td>{{ product.image1 }}</td>
-                <td>{{ product.image2 }}</td>
-                <td>{{ product.image3 }}</td>
-                <td>{{ product.description }}</td>
+                <td>{{ product.slug }}</td>
                 <td>
-                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('product_show', {'id': product.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('product_edit', {'id': product.id}) }}">Editar</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +57,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('product_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('product_new') }}">Adicionar producto</a>
 {% endblock %}

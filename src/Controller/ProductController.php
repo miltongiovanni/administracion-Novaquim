@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,31 +22,20 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository): Response
     {
+        //var_dump($productRepository->findAll()); die;
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="product_new", methods={"GET","POST"})
+     * @Route("/new", name="product_new", methods={"GET"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
-        }
-
         return $this->renderForm('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
+            'action' => 'insert',
+            'categorias' => $categoryRepository->findAll(),
         ]);
     }
 
@@ -59,25 +50,56 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="product_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="product_edit", methods={"GET"})
      */
-    public function edit(Request $request, Product $product): Response
+    public function edit(Request $request, int $id, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $product = $productRepository->find($id);
 
         return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
-            'form' => $form,
+            'categorias' => $categoryRepository->findAll(),
+            'action' => 'update',
         ]);
     }
 
+    /**
+     * @Route("/{id}/update", name="product_update", methods={"POST"})
+     */
+    public function update(Request $request, int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
+    {
+        if ($id == 0) {
+            $product = new Product();
+        } else {
+            $product = $productRepository->find($id);
+        }
+        $idCategory = $request->request->get('category_id');
+        $category = $categoryRepository->find($idCategory);
+        $action = $request->request->get('action');
+        $product->setTitle($request->request->get('title'));
+        $product->setMetaTitle($request->request->get('meta_title'));
+        $product->setSlug($request->request->get('slug'));
+        $product->setCategory($category);
+        $product->setMetaDescription($request->request->get('meta_description'));
+        $product->setDescription($request->request->get('description'));
+        $product->setImage1($request->request->get('image_1'));
+        $product->setImage2($request->request->get('image_2'));
+        $product->setImage3($request->request->get('image_3'));
+
+        $entityManager->persist($product);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+        if ($action=='insert'){
+            $this->addFlash('success', 'Producto creado correctamente');
+        }else{
+            $this->addFlash('success', 'Producto actualizado correctamente');
+        }
+
+        //$this->addFlash('error', ' Error al actualizar el Usuario');
+        return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+    }
     /**
      * @Route("/{id}", name="product_delete", methods={"POST"})
      */
@@ -91,4 +113,8 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
 }

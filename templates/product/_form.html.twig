@@ -1,4 +1,249 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="row">
+    <div class="col-md-12 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical needs-validation" method="post" novalidate
+                          action="{% if product.id is defined %}{{ path('product_update', {'id':  product.id }) }}{% else %}{{ path('product_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="title">Título</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                   required
+                                                   value="{% if product.title is defined %}{{ product.title }}{% endif %}">
+                                            <div class="valid-feedback">Válido.</div>
+                                            <div class="invalid-feedback" id="titleMessage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group ">
+                                    <label for="slug">Slug</label>
+                                    <div class="position-relative has-validation">
+                                        <input type="text" class="form-control"
+                                               id="slug" name="slug" required
+                                               value="{% if product.slug is defined %}{{ product.slug }}{% endif %}">
+                                        <div class="valid-feedback">Válido.</div>
+                                        <div class="invalid-feedback" id="valueMessage">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="form-group has-icon-left">
+                                        <label for="category_id">Categoría</label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="category_id" name="category_id" required>
+                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                    Seleccione la categoría
+                                                </option>
+                                                {%  for categoria in categorias %}
+                                                    <option value="{{ categoria.id }}" {% if producto.categoria is defined and producto.categoria == categoria.id %} selected {% endif %}>
+                                                        {{ categoria.name }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="valid-feedback">Válido.</div>
+                                            <div class="invalid-feedback">
+                                                Seleccione una categoría.
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description">Descripción</label>
+                                        <div class="position-relative has-validation">
+                                            <textarea name="description" id="description" class="form-control editor" cols="30"
+                                                      rows="10"
+                                                      required>{% if product.description is defined %}{{ product.description }}{% endif %}</textarea>
+                                            <div class="valid-feedback">Válido.</div>
+                                            <div class="invalid-feedback" id="metaDescriptionMessage">
+                                                Escriba una pequeña descripción del producto
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="image_1">Imagen</label>
+                                        <div class="row align-items-center ms-0">
+                                            <div id="image_1_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
+                                                <div id="dropzoneTitle" class="dz-clickable" style="display: {% if product.getImage1() is defined and product.getImage1()!='' %} none {% else %} block {% endif %}">
+                                                    <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
+                                                    <div class="text-center">Arrastrar y soltar la imagen aquí</div>
+                                                    <div class="text-center">o</div>
+                                                    <div class="text-center">Haga clic aquí para buscar la imagen</div>
+                                                </div>
+                                                <div id="img-preview" style="display: {% if product.getImage1() is defined  and product.getImage1()!=''%} block {% else %} none {% endif %}">
+                                                    <img id="img-product" src="{% if product.getImage1() is defined  and product.getImage1()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage1() }}{% endif %}" class="img-product" alt="img">
+                                                </div>
+
+                                            </div>
+                                            <div class="position-relative has-validation col-sm-8">
+                                                <input type="text" class="form-control" id="image_1" name="image_1"
+                                                       required
+                                                       value="{% if product.getImage1() is defined and product.getImage1()!='' %}{{ product.getImage1() }}{% endif %}">
+                                                <div class="valid-feedback">Válido.</div>
+                                                <div class="invalid-feedback" id="titleImagen1">
+                                                    Por lo menos una imagen es requerida
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="image_2">Imagen</label>
+                                        <div class="row align-items-center ms-0">
+                                            <div id="image_2_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
+                                                <div id="dropzoneTitle2" class="dz-clickable" style="display: {% if product.image_2 is defined %} none {% else %} block {% endif %}">
+                                                    <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
+                                                    <div class="text-center">Arrastrar y soltar la imagen aquí</div>
+                                                    <div class="text-center">o</div>
+                                                    <div class="text-center">Haga clic aquí para buscar la imagen</div>
+                                                </div>
+                                                <div id="img-preview2" style="display: {% if product.image_2 is defined %} block {% else %} none {% endif %}">
+                                                    <img id="img-product2" src="" class="img-product" alt="img">
+                                                </div>
+
+                                            </div>
+                                            <div class="position-relative col-sm-8">
+                                                <input type="text" class="form-control" id="image_2" name="image_2"
+                                                       value="{% if product.image_2 is defined %}{{ product.image_2 }}{% endif %}">
+                                                <div class="valid-feedback">Válido.</div>
+                                                <div class="invalid-feedback" id="titleMessage">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="image_3">Imagen</label>
+                                        <div class="row align-items-center ms-0">
+                                            <div id="image_3_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
+                                                <div id="dropzoneTitle3" class="dz-clickable" style="display: {% if product.image_3 is defined %} none {% else %} block {% endif %}">
+                                                    <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
+                                                    <div class="text-center">Arrastrar y soltar la imagen aquí</div>
+                                                    <div class="text-center">o</div>
+                                                    <div class="text-center">Haga clic aquí para buscar la imagen</div>
+                                                </div>
+                                                <div id="img-preview3" style="display: {% if product.image_3 is defined %} block {% else %} none {% endif %}">
+                                                    <img id="img-product3" src="" class="img-product" alt="img">
+                                                </div>
+
+                                            </div>
+                                            <div class="position-relative col-sm-8">
+                                                <input type="text" class="form-control" id="image_3" name="image_3"
+                                                       value="{% if product.image_3 is defined %}{{ product.image_3 }}{% endif %}">
+                                                <div class="valid-feedback">Válido.</div>
+                                                <div class="invalid-feedback" id="titleMessage">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="meta_title">Meta título</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="meta_title" name="meta_title"
+                                                   value="{% if product.getMetaTitle() is defined %}{{ product.getMetaTitle() }}{% endif %}">
+                                            <div class="valid-feedback">Válido.</div>
+                                            <div class="invalid-feedback" id="metaTitleMessage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="meta_description">Meta descripción</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="meta_description"
+                                                   name="meta_description"
+                                                   value="{% if product.getMetaDescription() is defined %}{{ product.getMetaDescription() }}{% endif %}">
+                                            <div class="valid-feedback">Válido.</div>
+                                            <div class="invalid-feedback" id="metaDescriptionMessage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset"
+                                            class="btn btn-light-secondary me-1 mb-1">Reiniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block js %}
+    <script>
+        (function () {
+            'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+console.log(forms);
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        //console.log(form["description"].value);
+                        //console.log(form["value"].value);
+                        //Validacion
+                        if (form["title"].value == '') {
+                            document.getElementById('titleMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        if (form["slug"].value == '') {
+                            document.getElementById('valueMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+{% endblock %}

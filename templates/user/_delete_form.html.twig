@@ -1,6 +1,6 @@
 <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" id="deleteUserForm" >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-    <button class="btn btn-danger mt-3" type="button" onclick="confirmation(document.getElementById('deleteUserForm'), '¿Está seguro de borrar el usuario?')">Borrar usuario</button>
+    <button class="btn btn-danger mt-3 ms-3" type="button" onclick="confirmation(document.getElementById('deleteUserForm'), '¿Está seguro de borrar el usuario?')">Borrar usuario</button>
 </form>
 
 {% block js %}

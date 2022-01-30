@@ -68,17 +68,17 @@
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-item has-sub">
+            <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'product_index' or app.request.attributes.get('_route') == 'product_new') ? 'active' : ''  }}">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-box-seam"></i>
                     <span>Productos</span>
                 </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
-                        <a href="layout-default.html">Default Layout</a>
+                <ul class="submenu {{ (app.request.attributes.get('_route') == 'product_index' or app.request.attributes.get('_route') == 'product_new') ? 'active' : ''  }}">
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'product_index') ? 'active' : ''  }}">
+                        <a href="{{ path('product_index') }}">Lista</a>
                     </li>
-                    <li class="submenu-item ">
-                        <a href="layout-vertical-1-column.html">1 Column</a>
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'product_new') ? 'active' : ''  }}">
+                        <a href="{{ path('product_new') }}">Creación</a>
                     </li>
                 </ul>
             </li>

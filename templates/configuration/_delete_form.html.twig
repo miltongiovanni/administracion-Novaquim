@@ -1,6 +1,6 @@
 <form method="post" action="{{ path('configuration_delete', {'id': configuration.id}) }}" id="deleteConfigurationForm">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ configuration.id) }}">
-    <button class="btn btn-danger mt-3" type="button" onclick="confirmation(document.getElementById('deleteConfigurationForm'), '¿Está seguro de borrar la configuración?')">Borrar configuración</button>
+    <button class="btn btn-danger mt-3 ms-3" type="button" onclick="confirmation(document.getElementById('deleteConfigurationForm'), '¿Está seguro de borrar la configuración?')">Borrar configuración</button>
 </form>
 
 {% block js %}
