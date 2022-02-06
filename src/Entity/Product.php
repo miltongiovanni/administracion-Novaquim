@@ -28,7 +28,7 @@ class Product
     private $meta_title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $meta_description;
 

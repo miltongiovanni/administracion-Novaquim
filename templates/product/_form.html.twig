@@ -188,9 +188,9 @@
                                     <div class="form-group">
                                         <label for="meta_description">Meta descripción</label>
                                         <div class="position-relative has-validation">
-                                            <input type="text" class="form-control" id="meta_description"
-                                                   name="meta_description"
-                                                   value="{% if product.getMetaDescription() is defined %}{{ product.getMetaDescription() }}{% endif %}">
+                                            <textarea name="meta_description" id="meta_description" class="form-control " cols="30"
+                                                      rows="3"
+                                                      required>{% if product.getMetaDescription() is defined %}{{ product.getMetaDescription() }}{% endif %}</textarea>
                                             <div class="valid-feedback">Válido.</div>
                                             <div class="invalid-feedback" id="metaDescriptionMessage">
                                             </div>
