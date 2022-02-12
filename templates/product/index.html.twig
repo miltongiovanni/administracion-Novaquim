@@ -23,7 +23,6 @@
                 <th>Title</th>
                 <th>Categoría</th>
                 <th class="text-center">Imagen</th>
-                <th>Descripción corta</th>
                 <th>Slug</th>
                 <th></th>
             </tr>
@@ -35,7 +34,6 @@
                 <td>{{ product.title }}</td>
                 <td>{{ product.category.name }}</td>
                 <td><img class="img-list" src="{{ app_url }}{{ 'uploads/images/' }}{{ product.image1 }}" alt="{{ product.title }}"></td>
-                <td>{{ product.metaDescription }}</td>
                 <td>{{ product.slug }}</td>
                 <td>
                     <div class="dropdown">

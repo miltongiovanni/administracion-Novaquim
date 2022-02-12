@@ -115,20 +115,20 @@
                                         <label for="image_2">Imagen</label>
                                         <div class="row align-items-center ms-0">
                                             <div id="image_2_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
-                                                <div id="dropzoneTitle2" class="dz-clickable" style="display: {% if product.image_2 is defined %} none {% else %} block {% endif %}">
+                                                <div id="dropzoneTitle2" class="dz-clickable" style="display: {% if product.getImage2() is defined %} none {% else %} block {% endif %}">
                                                     <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
                                                     <div class="text-center">Arrastrar y soltar la imagen aquí</div>
                                                     <div class="text-center">o</div>
                                                     <div class="text-center">Haga clic aquí para buscar la imagen</div>
                                                 </div>
-                                                <div id="img-preview2" style="display: {% if product.image_2 is defined %} block {% else %} none {% endif %}">
-                                                    <img id="img-product2" src="" class="img-product" alt="img">
+                                                <div id="img-preview2" style="display: {% if product.getImage2() is defined %} block {% else %} none {% endif %}">
+                                                    <img id="img-product2" src="{% if product.getImage2() is defined  and product.getImage2()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage2() }}{% endif %}" class="img-product" alt="img">
                                                 </div>
 
                                             </div>
                                             <div class="position-relative col-sm-8">
                                                 <input type="text" class="form-control" id="image_2" name="image_2"
-                                                       value="{% if product.image_2 is defined %}{{ product.image_2 }}{% endif %}">
+                                                       value="{% if product.getImage2() is defined %}{{ product.getImage2() }}{% endif %}">
                                                 <div class="valid-feedback">Válido.</div>
                                                 <div class="invalid-feedback" id="titleMessage">
                                                 </div>
@@ -145,20 +145,20 @@
                                         <label for="image_3">Imagen</label>
                                         <div class="row align-items-center ms-0">
                                             <div id="image_3_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
-                                                <div id="dropzoneTitle3" class="dz-clickable" style="display: {% if product.image_3 is defined %} none {% else %} block {% endif %}">
+                                                <div id="dropzoneTitle3" class="dz-clickable" style="display: {% if product.getImage3() is defined %} none {% else %} block {% endif %}">
                                                     <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
                                                     <div class="text-center">Arrastrar y soltar la imagen aquí</div>
                                                     <div class="text-center">o</div>
                                                     <div class="text-center">Haga clic aquí para buscar la imagen</div>
                                                 </div>
-                                                <div id="img-preview3" style="display: {% if product.image_3 is defined %} block {% else %} none {% endif %}">
-                                                    <img id="img-product3" src="" class="img-product" alt="img">
+                                                <div id="img-preview3" style="display: {% if product.getImage3() is defined %} block {% else %} none {% endif %}">
+                                                    <img id="img-product3" src="{% if product.getImage3() is defined  and product.getImage3()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage3() }}{% endif %}" class="img-product" alt="img">
                                                 </div>
 
                                             </div>
                                             <div class="position-relative col-sm-8">
                                                 <input type="text" class="form-control" id="image_3" name="image_3"
-                                                       value="{% if product.image_3 is defined %}{{ product.image_3 }}{% endif %}">
+                                                       value="{% if product.getImage3() is defined %}{{ product.getImage3() }}{% endif %}">
                                                 <div class="valid-feedback">Válido.</div>
                                                 <div class="invalid-feedback" id="titleMessage">
                                                 </div>
@@ -219,7 +219,6 @@
             'use strict'
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.querySelectorAll('.needs-validation')
-console.log(forms);
             // Loop over them and prevent submission
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
@@ -228,8 +227,6 @@ console.log(forms);
                             event.preventDefault()
                             event.stopPropagation()
                         }
-                        //console.log(form["description"].value);
-                        //console.log(form["value"].value);
                         //Validacion
                         if (form["title"].value == '') {
                             document.getElementById('titleMessage').innerHTML = 'Este valor es requerido';

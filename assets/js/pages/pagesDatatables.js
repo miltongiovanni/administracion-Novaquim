@@ -79,7 +79,7 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [0, 3, 6],
+                    "targets": [0, 3, 5],
                     "className": 'dt-body-center'
                 },
                 {
