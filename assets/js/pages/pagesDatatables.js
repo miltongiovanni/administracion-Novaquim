@@ -83,7 +83,7 @@ $(document).ready(function () {
                     "className": 'dt-body-center'
                 },
                 {
-                    "targets": [3],
+                    "targets": [3, 5],
                     "orderable": false
                 }
             ],
@@ -102,7 +102,7 @@ $(document).ready(function () {
             "infoFiltered": "(Filtrado de _MAX_ en total)"
 
         },
-        "order": [[ 1, "asc" ]]
+        "order": [[ 0, "desc" ]]
     });
     $('#bannersDatatable').DataTable({
         "columnDefs":

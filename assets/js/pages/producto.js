@@ -55,7 +55,7 @@ tinymce.init({
     relative_urls: false,
     remove_script_host: false,
     images_upload_url: '/uploadImage',
-    images_upload_base_path: '../uploads/images',
+    images_upload_base_path: '/uploads/images',
     images_upload_credentials: true,
 
 });
