@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Banner{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ encore_entry_link_tags('banners') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('banner') }}
+{% endblock %}
+
+
+{% block content %}
+    <h2 class="ps-3">Editar banner</h2>
+
+    {{ include('banner/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary ms-3" href="{{ path('banner_index') }}">Volver a la lista</a>
+
+    {{ include('banner/_delete_form.html.twig') }}
+{% endblock %}

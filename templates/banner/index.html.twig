@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de banners{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ encore_entry_link_tags('banners') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('pagesDatatables') }}
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de banners</h1>
+
+    <table class="table" id="bannersDatatable">
+        <thead>
+            <tr>
+                <th class="text-center">Id</th>
+                <th>Título</th>
+                <th>Subtítulo</th>
+                <th class="text-center">Imagen de fondo</th>
+                <th class="text-center">Imagen de frente</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for banner in banners %}
+            <tr>
+                <td>{{ banner.id }}</td>
+                <td>{{ banner.title }}</td>
+                <td>{{ banner.subtitle }}</td>
+                <td><img class="img-list" src="{{ app_url }}{{ 'uploads/images/' }}{{ banner.backgroundImage }}" alt="{{ banner.title }}"</td>
+                <td><img class="img-list" src="{{ app_url }}{{ 'uploads/images/' }}{{ banner.frontImage }}" alt="{{ banner.subtitle }}"</td>
+                <td>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('banner_show', {'id': banner.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('banner_edit', {'id': banner.id}) }}">Editar</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('banner_new') }}">Adicionar banner</a>
+{% endblock %}

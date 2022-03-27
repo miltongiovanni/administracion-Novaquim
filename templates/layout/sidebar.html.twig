@@ -56,7 +56,7 @@
 
             <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'category_index' or app.request.attributes.get('_route') == 'category_new') ? 'active' : ''  }}">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-collection-fill"></i>
+                    <i class="bi bi-menu-button-fill"></i>
                     <span>Categorías</span>
                 </a>
                 <ul class="submenu {{ (app.request.attributes.get('_route') == 'category_index' or app.request.attributes.get('_route') == 'category_new') ? 'active' : ''  }}">
@@ -79,6 +79,20 @@
                     </li>
                     <li class="submenu-item {{ (app.request.attributes.get('_route') == 'product_new') ? 'active' : ''  }}">
                         <a href="{{ path('product_new') }}">Creación</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'banner_index' or app.request.attributes.get('_route') == 'banner_new') ? 'active' : ''  }}">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-view-list"></i>
+                    <span>Banners</span>
+                </a>
+                <ul class="submenu {{ (app.request.attributes.get('_route') == 'banner_index' or app.request.attributes.get('_route') == 'banner_new') ? 'active' : ''  }}">
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'banner_index') ? 'active' : ''  }}">
+                        <a href="{{ path('banner_index') }}">Lista</a>
+                    </li>
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'banner_new') ? 'active' : ''  }}">
+                        <a href="{{ path('banner_new') }}">Creación</a>
                     </li>
                 </ul>
             </li>

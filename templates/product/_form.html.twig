@@ -228,12 +228,12 @@
                             event.stopPropagation()
                         }
                         //Validacion
-                        if (form["title"].value == '') {
+                        if (form["title"].value === '') {
                             document.getElementById('titleMessage').innerHTML = 'Este valor es requerido';
                             event.preventDefault()
                             event.stopPropagation()
                         }
-                        if (form["slug"].value == '') {
+                        if (form["slug"].value === '') {
                             document.getElementById('valueMessage').innerHTML = 'Este valor es requerido';
                             event.preventDefault()
                             event.stopPropagation()

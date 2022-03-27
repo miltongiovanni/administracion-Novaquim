@@ -1,8 +1,7 @@
-<form method="post" action="{{ path('product_delete', {'id': product.id}) }}" id="deleteProductForm">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
-    <button class="btn btn-danger ms-3 mt-3" type="button" onclick="confirmation(document.getElementById('deleteProductForm'), '¿Está seguro de borrar el producto?')">Borrar</button>
+<form method="post" action="{{ path('banner_delete', {'id': banner.id}) }}" id="deleteBannerForm">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ banner.id) }}">
+    <button class="btn btn-danger ms-3 mt-3" type="button" onclick="confirmation(document.getElementById('deleteBannerForm'), '¿Está seguro de borrar el banner?')">Borrar</button>
 </form>
-
 {% block js %}
     <script>
         function confirmation(form, text) {

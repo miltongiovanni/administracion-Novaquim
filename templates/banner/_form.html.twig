@@ -1,0 +1,150 @@
+<div class="row">
+    <div class="col-md-12 col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical needs-validation" method="post" novalidate
+                          action="{% if banner.id is defined %}{{ path('banner_update', {'id':  banner.id }) }}{% else %}{{ path('banner_update', {'id':  0 }) }}{% endif %}"
+                    >
+                        <input type="hidden" name="action" id="action" value="{{ action }}">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="title">Título</label>
+                                        <div class="position-relative has-validation">
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                   required
+                                                   value="{% if banner.title is defined %}{{ banner.title }}{% endif %}">
+                                            <div class="valid-feedback">Válido.</div>
+                                            <div class="invalid-feedback" id="titleMessage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group ">
+                                    <label for="subtitle">Subtítulo</label>
+                                    <div class="position-relative has-validation">
+                                        <input type="text" class="form-control"
+                                               id="subtitle" name="subtitle" required
+                                               value="{% if banner.subtitle is defined %}{{ banner.subtitle }}{% endif %}">
+                                        <div class="valid-feedback">Válido.</div>
+                                        <div class="invalid-feedback" id="valueMessage">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="background_image">Imagen de fondo</label>
+                                        <div class="row align-items-center ms-0">
+                                            <div id="background_image_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
+                                                <div id="dropzoneTitle" class="dz-clickable" style="display: {% if banner.getBackgroundImage() is defined and banner.getBackgroundImage()!='' %} none {% else %} block {% endif %}">
+                                                    <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
+                                                    <div class="text-center">Arrastrar y soltar la imagen aquí</div>
+                                                    <div class="text-center">o</div>
+                                                    <div class="text-center">Haga clic aquí para buscar la imagen</div>
+                                                </div>
+                                                <div id="img-preview" style="display: {% if banner.getBackgroundImage() is defined  and banner.getBackgroundImage()!=''%} block {% else %} none {% endif %}">
+                                                    <img id="img-background" src="{% if banner.getBackgroundImage() is defined  and banner.getBackgroundImage()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ banner.getBackgroundImage() }}{% endif %}" class="img-fluid" alt="img">
+                                                </div>
+
+                                            </div>
+                                            <div class="position-relative has-validation col-sm-8">
+                                                <input type="text" class="form-control" id="background_image" name="background_image"
+                                                       required
+                                                       value="{% if banner.getBackgroundImage() is defined and banner.getBackgroundImage()!='' %}{{ banner.getBackgroundImage() }}{% endif %}">
+                                                <div class="valid-feedback">Válido.</div>
+                                                <div class="invalid-feedback" id="titleImagenBackground">
+                                                    La imagen de fondo es requerida
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="front_image">Imagen de frente</label>
+                                        <div class="row align-items-center ms-0">
+                                            <div id="front_image_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
+                                                <div id="dropzoneTitle2" class="dz-clickable" style="display: {% if banner.getFrontImage() is defined and banner.getFrontImage()!='' %} none {% else %} block {% endif %}">
+                                                    <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
+                                                    <div class="text-center">Arrastrar y soltar la imagen aquí</div>
+                                                    <div class="text-center">o</div>
+                                                    <div class="text-center">Haga clic aquí para buscar la imagen</div>
+                                                </div>
+                                                <div id="img-preview2" style="display: {% if banner.getFrontImage() is defined  and banner.getFrontImage()!=''%} block {% else %} none {% endif %}">
+                                                    <img id="img-front" src="{% if banner.getFrontImage() is defined  and banner.getFrontImage()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ banner.getFrontImage() }}{% endif %}" class="img-product" alt="img">
+                                                </div>
+
+                                            </div>
+                                            <div class="position-relative has-validation col-sm-8">
+                                                <input type="text" class="form-control" id="front_image" name="front_image"
+                                                       required
+                                                       value="{% if banner.getFrontImage() is defined and banner.getFrontImage()!='' %}{{ banner.getFrontImage() }}{% endif %}">
+                                                <div class="valid-feedback">Válido.</div>
+                                                <div class="invalid-feedback" id="titleImagenFront">
+                                                    La imagen de primer plano es requerida
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                    <button type="reset"
+                                            class="btn btn-light-secondary me-1 mb-1">Reiniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block js %}
+    <script>
+        (function () {
+            'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        //Validacion
+                        if (form["title"].value === '') {
+                            document.getElementById('titleMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        if (form["subtitle"].value === '') {
+                            document.getElementById('valueMessage').innerHTML = 'Este valor es requerido';
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+{% endblock %}

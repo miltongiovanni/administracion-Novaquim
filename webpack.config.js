@@ -47,8 +47,10 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('producto', './assets/js/pages/producto.js')
+    .addEntry('banner', './assets/js/pages/banner.js')
     .addEntry('pagesDatatables', './assets/js/pages/pagesDatatables.js')
     .addStyleEntry('product', './assets/styles/pages/product.scss')
+    .addStyleEntry('banners', './assets/styles/pages/banner.scss')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 
