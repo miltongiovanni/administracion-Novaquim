@@ -96,67 +96,7 @@
                     </li>
                 </ul>
             </li>
-
-
-            <li class="sidebar-item has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-menu-button-wide-fill"></i>
-                    <span>Menu sitio</span>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
-                        <a href="layout-default.html">Default Layout</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="layout-vertical-1-column.html">1 Column</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-collection"></i>
-                    <span>Presentación</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="extra-component-avatar.html">Lista</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="extra-component-sweetalert.html">Crear</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="bi bi-layout-text-window-reverse"></i>
-                    <span>Páginas</span>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
-                        <a href="layout-default.html">Default Layout</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="layout-vertical-1-column.html">1 Column</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        {# <ul class="menu">{% for sidebarItem in sidebarItems %}{% if sidebarItem.isTitle %}
-                <li class="sidebar-title">{{sidebarItem.name}}</li>
-            {% else %}
-                <li class="sidebar-item {{ 'active' if (sidebarItem.url == filename or filename|startsWith(sidebarItem.key)) }} {{'has-sub' if sidebarItem.submenu.length > 0 }}">
-                    <a href="{{sidebarItem.url if sidebarItem.url!==undefined else '#'}}" class='sidebar-link'>
-                        <i class="bi bi-{{ sidebarItem.icon }}"></i>
-                        <span>{{sidebarItem.name}}</span>
-                    </a>{% if sidebarItem.submenu.length > 0 %}
-                    <ul class="submenu {{ 'active' if (sub.url == filename or filename|startsWith(sidebarItem.key)) }}">{% for sub in sidebarItem.submenu %}
-                    <li class="submenu-item {{ 'active' if sub.url == filename }}">
-                        <a href="{{ sub.url }}">{{ sub.name }}</a>
-                        </li>{% endfor %}
-                    </ul>{% endif %}
-                </li>
-            {% endif %}{% endfor %}
-        </ul> #}
+            
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 </div>
