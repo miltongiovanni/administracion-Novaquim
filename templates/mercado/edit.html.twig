@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Mercado{% endblock %}
+
+{% block content %}
+    <h2 class="ps-3">Editar Mercado</h2>
+
+    {{ include('mercado/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary ms-3" href="{{ path('mercado_index') }}">Volver a la lista</a>
+
+    {{ include('mercado/_delete_form.html.twig') }}
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
+use App\Repository\MercadoRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,6 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository): Response
     {
-        //var_dump($productRepository->findAll()); die;
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
@@ -31,11 +31,12 @@ class ProductController extends AbstractController
     /**
      * @Route("/new", name="product_new", methods={"GET"})
      */
-    public function new(Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
     {
         return $this->renderForm('product/new.html.twig', [
             'action' => 'insert',
             'categorias' => $categoryRepository->findAll(),
+            'mercados' => $mercadoRepository->findAll(),
         ]);
     }
 
@@ -52,13 +53,14 @@ class ProductController extends AbstractController
     /**
      * @Route("/{id}/edit", name="product_edit", methods={"GET"})
      */
-    public function edit(Request $request, int $id, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
+    public function edit(Request $request, int $id, ProductRepository $productRepository, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
     {
         $product = $productRepository->find($id);
 
         return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
             'categorias' => $categoryRepository->findAll(),
+            'mercados' => $mercadoRepository->findAll(),
             'action' => 'update',
         ]);
     }
@@ -103,17 +105,13 @@ class ProductController extends AbstractController
     /**
      * @Route("/{id}", name="product_delete", methods={"POST"})
      */
-    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($product);
-            $entityManager->flush();
+            $productRepository->remove($product);
         }
 
         return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
-
 
 }

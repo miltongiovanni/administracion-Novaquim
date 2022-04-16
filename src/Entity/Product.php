@@ -63,6 +63,11 @@ class Product
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Mercado::class, inversedBy="products")
+     */
+    private $mercado;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -172,6 +177,18 @@ class Product
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getMercado(): ?Mercado
+    {
+        return $this->mercado;
+    }
+
+    public function setMercado(?Mercado $mercado): self
+    {
+        $this->mercado = $mercado;
 
         return $this;
     }

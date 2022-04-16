@@ -91,12 +91,10 @@ class ConfigurationController extends AbstractController
     /**
      * @Route("/{id}", name="configuration_delete", methods={"POST"})
      */
-    public function delete(Request $request, Configuration $configuration): Response
+    public function delete(Request $request, Configuration $configuration, ConfigurationRepository $configurationRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$configuration->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($configuration);
-            $entityManager->flush();
+            $configurationRepository->remove($configuration);
         }
 
         return $this->redirectToRoute('configuration_index', [], Response::HTTP_SEE_OTHER);

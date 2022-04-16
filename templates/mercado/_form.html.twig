@@ -4,7 +4,7 @@
             <div class="card-content">
                 <div class="card-body">
                     <form class="form form-vertical needs-validation" method="post" novalidate
-                          action="{% if category.id is defined %}{{ path('category_update', {'id':  category.id }) }}{% else %}{{ path('category_update', {'id':  0 }) }}{% endif %}"
+                          action="{% if mercado.id is defined %}{{ path('mercado_update', {'id':  mercado.id }) }}{% else %}{{ path('mercado_update', {'id':  0 }) }}{% endif %}"
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
                         <div class="form-body">
@@ -15,7 +15,7 @@
                                         <div class="position-relative has-validation">
                                             <input type="text" class="form-control" id="name" name="name"
                                                    required
-                                                   value="{% if category.name is defined %}{{ category.name }}{% endif %}">
+                                                   value="{% if mercado.name is defined %}{{ mercado.name }}{% endif %}">
                                             <div class="valid-feedback"></div>
                                             <div class="invalid-feedback" id="descriptionMessage">
                                                 Este valor es requerido
@@ -29,7 +29,7 @@
                                         <div class="position-relative has-validation">
                                             <input type="text" class="form-control"
                                                    id="slug" name="slug" required
-                                                   value="{% if category.slug is defined %}{{ category.slug }}{% endif %}">
+                                                   value="{% if mercado.slug is defined %}{{ mercado.slug }}{% endif %}">
                                             <div class="valid-feedback"></div>
                                             <div class="invalid-feedback" id="valueMessage">
                                                 Este valor es requerido

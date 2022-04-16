@@ -67,6 +67,20 @@
                         <a href="{{ path('category_new') }}">Creación</a>
                     </li>
                 </ul>
+
+            <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'mercado_index' or app.request.attributes.get('_route') == 'mercado_new') ? 'active' : ''  }}">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-ui-checks"></i>
+                    <span>Mercados</span>
+                </a>
+                <ul class="submenu {{ (app.request.attributes.get('_route') == 'mercado_index' or app.request.attributes.get('_route') == 'mercado_new') ? 'active' : ''  }}">
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'mercado_index') ? 'active' : ''  }}">
+                        <a href="{{ path('mercado_index') }}">Lista</a>
+                    </li>
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'mercado_new') ? 'active' : ''  }}">
+                        <a href="{{ path('mercado_new') }}">Creación</a>
+                    </li>
+                </ul>
             </li>
             <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'product_index' or app.request.attributes.get('_route') == 'product_new') ? 'active' : ''  }}">
                 <a href="#" class='sidebar-link'>

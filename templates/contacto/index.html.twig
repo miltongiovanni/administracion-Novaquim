@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacto index{% endblock %}
+
+{% block body %}
+    <h1>Contacto index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NombreContacto</th>
+                <th>Organizacion</th>
+                <th>EmailContacto</th>
+                <th>Telefono</th>
+                <th>Celular</th>
+                <th>TipoConsulta</th>
+                <th>Mensaje</th>
+                <th>AceptaPolitica</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contacto in contactos %}
+            <tr>
+                <td>{{ contacto.id }}</td>
+                <td>{{ contacto.nombreContacto }}</td>
+                <td>{{ contacto.organizacion }}</td>
+                <td>{{ contacto.emailContacto }}</td>
+                <td>{{ contacto.telefono }}</td>
+                <td>{{ contacto.celular }}</td>
+                <td>{{ contacto.tipoConsulta }}</td>
+                <td>{{ contacto.mensaje }}</td>
+                <td>{{ contacto.aceptaPolitica }}</td>
+                <td>
+                    <a href="{{ path('app_contacto_show', {'id': contacto.id}) }}">show</a>
+                    <a href="{{ path('app_contacto_edit', {'id': contacto.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contacto_new') }}">Create new</a>
+{% endblock %}

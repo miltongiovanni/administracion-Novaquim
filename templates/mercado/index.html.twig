@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lista de categorías{% endblock %}
+{% block title %}Lista de mercados{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('pagesDatatables') }}
 {% endblock %}
-
 {% block content %}
-    <h2>Lista de categorías</h2>
+    <h2>Lista de mercados</h2>
 
-    <table class="table" id="categoriesDatatable">
+    <table class="table" id="mercadosDatatable">
         <thead>
             <tr>
                 <th>Id</th>
@@ -20,30 +19,30 @@
             </tr>
         </thead>
         <tbody>
-        {% for category in categories %}
+        {% for mercado in mercados %}
             <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.slug }}</td>
+                <td>{{ mercado.id }}</td>
+                <td>{{ mercado.name }}</td>
+                <td>{{ mercado.slug }}</td>
                 <td>
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Acciones
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ path('category_show', {'id': category.id}) }}">Ver</a></li>
-                            <li><a class="dropdown-item" href="{{ path('category_edit', {'id': category.id}) }}">Editar</a></li>
+                            <li><a class="dropdown-item" href="{{ path('mercado_show', {'id': mercado.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('mercado_edit', {'id': mercado.id}) }}">Editar</a></li>
                         </ul>
                     </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No hay datos</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('category_new') }}">Adicionar categoría</a>
+    <a class="btn btn-primary" href="{{ path('mercado_new') }}">Adicionar mercado</a>
 {% endblock %}
