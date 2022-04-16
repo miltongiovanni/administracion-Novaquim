@@ -68,7 +68,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/{id}/update", name="product_update", methods={"POST"})
      */
-    public function update(Request $request, int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
+    public function update(Request $request, int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
     {
         if ($id == 0) {
             $product = new Product();
@@ -77,11 +77,14 @@ class ProductController extends AbstractController
         }
         $idCategory = $request->request->get('category_id');
         $category = $categoryRepository->find($idCategory);
+        $idMercado = $request->request->get('mercado_id');
+        $mercado = $mercadoRepository->find($idMercado);
         $action = $request->request->get('action');
         $product->setTitle($request->request->get('title'));
         $product->setMetaTitle($request->request->get('meta_title'));
         $product->setSlug($request->request->get('slug'));
         $product->setCategory($category);
+        $product->setMercado($mercado);
         $product->setMetaDescription($request->request->get('meta_description'));
         $product->setDescription($request->request->get('description'));
         $product->setImage1($request->request->get('image_1'));

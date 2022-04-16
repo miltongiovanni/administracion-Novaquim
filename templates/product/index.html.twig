@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Lista de productos</h1>
+    <h2>Lista de productos</h2>
 
     <table class="table" id="productosDatatable">
         <thead>
@@ -22,6 +22,7 @@
                 <th class="text-center">Id</th>
                 <th>Title</th>
                 <th>Categoría</th>
+                <th>Mercado</th>
                 <th class="text-center">Imagen</th>
                 <th>Slug</th>
                 <th></th>
@@ -33,6 +34,7 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.title }}</td>
                 <td>{{ product.category.name }}</td>
+                <td>{{ product.mercado.name is defined ? product.mercado.name : '' }}</td>
                 <td><img class="img-list" src="{{ app_url }}{{ 'uploads/images/' }}{{ product.image1 }}" alt="{{ product.title }}"></td>
                 <td>{{ product.slug }}</td>
                 <td>

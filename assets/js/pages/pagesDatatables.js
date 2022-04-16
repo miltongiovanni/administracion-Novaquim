@@ -84,11 +84,11 @@ $(document).ready(function () {
         "columnDefs":
             [
                 {
-                    "targets": [0, 3, 5],
+                    "targets": [0, 4, 6],
                     "className": 'dt-body-center'
                 },
                 {
-                    "targets": [3, 5],
+                    "targets": [4, 6],
                     "orderable": false
                 }
             ],
