@@ -57,6 +57,11 @@ class Contacto
      */
     private $aceptaPolitica;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fecha_contacto;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class Contacto
     public function setAceptaPolitica(int $aceptaPolitica): self
     {
         $this->aceptaPolitica = $aceptaPolitica;
+
+        return $this;
+    }
+
+    public function getFechaContacto(): ?\DateTimeInterface
+    {
+        return $this->fecha_contacto;
+    }
+
+    public function setFechaContacto(?\DateTimeInterface $fecha_contacto): self
+    {
+        $this->fecha_contacto = $fecha_contacto;
 
         return $this;
     }

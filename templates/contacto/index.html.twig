@@ -2,23 +2,34 @@
 
 {% block title %}Contacto index{% endblock %}
 
-{% block body %}
-    <h2>Contacto index</h2>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('pagesDatatables') }}
 
-    <table class="table">
+{% endblock %}
+{% block content %}
+    <h2>Lista de contactos Web</h2>
+    <div class="row flex-row-reverse">
+        <div class="col-2">
+            <button type="button" class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#exportContactoModal">
+                Exportar a Excel
+            </button>
+        </div>
+
+    </div>
+
+    <table class="table" id="contactosDatatable">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>NombreContacto</th>
-                <th>Organizacion</th>
-                <th>EmailContacto</th>
-                <th>Telefono</th>
-                <th>Celular</th>
-                <th>TipoConsulta</th>
-                <th>Mensaje</th>
-                <th>AceptaPolitica</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nombre Contacto</th>
+            <th>Organización</th>
+            <th>Email Contacto</th>
+            <th>Teléfono</th>
+            <th>Celular</th>
+            <th>Tipo de Consulta</th>
+            <th>Mensaje</th>
+        </tr>
         </thead>
         <tbody>
         {% for contacto in contactos %}
@@ -31,11 +42,6 @@
                 <td>{{ contacto.celular }}</td>
                 <td>{{ contacto.tipoConsulta }}</td>
                 <td>{{ contacto.mensaje }}</td>
-                <td>{{ contacto.aceptaPolitica }}</td>
-                <td>
-                    <a href="{{ path('app_contacto_show', {'id': contacto.id}) }}">show</a>
-                    <a href="{{ path('app_contacto_edit', {'id': contacto.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -44,6 +50,60 @@
         {% endfor %}
         </tbody>
     </table>
+    <!-- Modal -->
+    <div class="modal fade" id="exportContactoModal" tabindex="-1" aria-labelledby="exportContactoModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportContactoModalLabel">Seleccione el rango de fechas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form form-vertical needs-validation" method="post" novalidate target="_blank"
+                      action="{{ path('contacto_export') }}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Fecha inicial:</label>
+                            <input type="date" class="form-control" id="fecha_inicial" name="fecha_inicial" required>
+                            <div class="invalid-feedback">
+                                Éste valor es requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Fecha final:</label>
+                            <input type="date" class="form-control" id="fecha_final" name="fecha_final" required>
+                            <div class="invalid-feedback">
+                                Éste valor es requerido
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Exportar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_contacto_new') }}">Create new</a>
+{% endblock %}
+{% block js %}
+    <script>
+        (function () {
+            'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 {% endblock %}

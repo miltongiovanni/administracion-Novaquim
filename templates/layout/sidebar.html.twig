@@ -110,6 +110,17 @@
                     </li>
                 </ul>
             </li>
+            <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'contacto_index') ? 'active' : ''  }}">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-envelope"></i>
+                    <span>Contacto</span>
+                </a>
+                <ul class="submenu {{ (app.request.attributes.get('_route') == 'contacto_index') ? 'active' : ''  }}">
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'contacto_index') ? 'active' : ''  }}">
+                        <a href="{{ path('contacto_index') }}">Lista</a>
+                    </li>
+                </ul>
+            </li>
             
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

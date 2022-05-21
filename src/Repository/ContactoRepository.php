@@ -45,6 +45,19 @@ class ContactoRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByDates($fechaInicial, $fechaFinal)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.fecha_contacto >= :fechaInicial')
+            ->setParameter('fechaInicial', $fechaInicial)
+            ->andWhere('c.fecha_contacto <= :fechaFinal')
+            ->setParameter('fechaFinal', $fechaFinal)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Contacto[] Returns an array of Contacto objects
     //  */
