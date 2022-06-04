@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Distribuidor{% endblock %}
+
+{% block body %}
+    <h1>Distribuidor</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ distribuidor.id }}</td>
+            </tr>
+            <tr>
+                <th>Distribuidor</th>
+                <td>{{ distribuidor.distribuidor }}</td>
+            </tr>
+            <tr>
+                <th>Contacto</th>
+                <td>{{ distribuidor.contacto }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ distribuidor.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ distribuidor.celular }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ distribuidor.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Longitud</th>
+                <td>{{ distribuidor.longitud }}</td>
+            </tr>
+            <tr>
+                <th>Latitud</th>
+                <td>{{ distribuidor.latitud }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ distribuidor.estado ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('distribuidor_index') }}">back to list</a>
+
+    <a href="{{ path('distribuidor_edit', {'id': distribuidor.id}) }}">edit</a>
+
+    {{ include('distribuidor/_delete_form.html.twig') }}
+{% endblock %}

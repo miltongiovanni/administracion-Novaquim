@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de distribuidores{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('pagesDatatables') }}
+{% endblock %}
+
+{% block content %}
+    <h2>Lista de distribuidores</h2>
+
+    <table class="table" id="distribuidoresDatatable">
+        <thead>
+            <tr>
+                <th class="text-center">Id</th>
+                <th>Distribuidor</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th>Celular</th>
+                <th>Dirección</th>
+                <th>Longitud</th>
+                <th>Latitud</th>
+                <th class="text-center">Activo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for distribuidor in distribuidors %}
+            <tr>
+                <td>{{ distribuidor.id }}</td>
+                <td>{{ distribuidor.distribuidor }}</td>
+                <td>{{ distribuidor.contacto }}</td>
+                <td>{{ distribuidor.telefono }}</td>
+                <td>{{ distribuidor.celular }}</td>
+                <td>{{ distribuidor.direccion }}</td>
+                <td>{{ distribuidor.longitud }}</td>
+                <td>{{ distribuidor.latitud }}</td>
+                <td>{{ distribuidor.estado ? '<i class="bi link-success bi-check-circle"></i>' : '<i class="bi link-danger bi-x-circle"></i>' }}</td>
+                <td>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('distribuidor_show', {'id': distribuidor.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('distribuidor_edit', {'id': distribuidor.id}) }}">Editar</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary"  href="{{ path('distribuidor_new') }}">Adicionar distribuidor</a>
+{% endblock %}

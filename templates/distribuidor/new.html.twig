@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo distribuidor{% endblock %}
+
+{% block content %}
+    <h1>Agregar Distribuidor</h1>
+
+    {{ include('distribuidor/_form.html.twig') }}
+
+    <a class="btn btn-primary ms-3" href="{{ path('distribuidor_index') }}">Volver a la lista</a>
+{% endblock %}

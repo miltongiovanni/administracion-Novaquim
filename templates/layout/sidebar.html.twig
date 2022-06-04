@@ -110,6 +110,20 @@
                     </li>
                 </ul>
             </li>
+            <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'distribuidor_index' or app.request.attributes.get('_route') == 'distribuidor_new') ? 'active' : ''  }}">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-map"></i>
+                    <span>Distribuidores</span>
+                </a>
+                <ul class="submenu {{ (app.request.attributes.get('_route') == 'distribuidor_index' or app.request.attributes.get('_route') == 'distribuidor_new') ? 'active' : ''  }}">
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'distribuidor_index') ? 'active' : ''  }}">
+                        <a href="{{ path('distribuidor_index') }}">Lista</a>
+                    </li>
+                    <li class="submenu-item {{ (app.request.attributes.get('_route') == 'distribuidor_new') ? 'active' : ''  }}">
+                        <a href="{{ path('distribuidor_new') }}">Creación</a>
+                    </li>
+                </ul>
+            </li>
             <li class="sidebar-item has-sub {{ (app.request.attributes.get('_route') == 'contacto_index') ? 'active' : ''  }}">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-envelope"></i>

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Distribuidor{% endblock %}
+
+{% block content %}
+    <h2>Editar Distribuidor</h2>
+
+    {{ include('distribuidor/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary ms-3" href="{{ path('distribuidor_index') }}">Volver a la lista</a>
+
+    {{ include('distribuidor/_delete_form.html.twig') }}
+{% endblock %}
