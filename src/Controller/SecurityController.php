@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,25 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'title' => 'Acceso', 'web_title' => 'Industrias Novaquim S.A.S.']);
+    }
+
+    /**
+     * @Route("/forgot-password", name="app_forgot_password")
+     */
+    public function forgotPassword(UserRepository $userRepository): Response
+    {
+
+        return $this->render('security/forgot-password.html.twig', [ 'title' => 'Contraseña olvidada', 'web_title' => 'Industrias Novaquim S.A.S.']);
+    }
+
+    /**
+     * @Route("/send-passcode", name="app_send_passcode")
+     */
+    public function sendPasscode(UserRepository $userRepository): Response
+    {
+        $passcode = rand(10000, 49999) + rand(1, 50000);
+        dd($passcode);
+        return $this->render('security/forgot-password.html.twig', [ 'title' => 'Contraseña olvidada', 'web_title' => 'Industrias Novaquim S.A.S.']);
     }
 
     /**

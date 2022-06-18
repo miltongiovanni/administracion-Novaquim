@@ -35,6 +35,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $passcode;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +127,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPasscode(): ?int
+    {
+        return $this->passcode;
+    }
+
+    public function setPasscode(?int $passcode): self
+    {
+        $this->passcode = $passcode;
+
+        return $this;
     }
 
 }
