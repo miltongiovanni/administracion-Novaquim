@@ -1,0 +1,46 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}{{ title }} - {{ web_title }}{% endblock %}
+
+{% block content %}
+    <div class="row h-100">
+        <div class="col-lg-5 col-12">
+            <div id="auth-left">
+                <div class="auth-logo">
+                    <img src="{{ asset('build/images/logo/LogoNova1.jpg') }}" alt="Logo">
+                </div>
+                <h1 class="auth-title">Recuperación de Contraseña </h1>
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <p class="auth-subtitle mb-5">Ingrese el código que ha sido enviado a su dirección de correo para restablecer
+                    su contraseña.</p>
+
+                <form action="{{ path('app_check_passcode') }}" method="post">
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="text" class="form-control form-control-xl" placeholder="Código de recuperación" name="passcode"
+                               id="inputPasscode" maxlength="5" required autofocus>
+                        <div class="form-control-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Enviar</button>
+                </form>
+                <div class="text-center mt-5 text-lg fs-4">
+                    <p class='text-gray-600'>¿Recuerda su cuenta? <a href="{{ path('app_login') }}" class="font-bold">Iniciar
+                            sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 d-none d-lg-block">
+            <div id="auth-right">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

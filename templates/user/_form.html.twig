@@ -50,7 +50,7 @@
                                     <div class="form-group">
                                         <label for="password-id-icon">Contraseña</label>
                                         <div class="position-relative">
-                                            <input type="password" class="form-control" placeholder="Password" pattern=".{8,}" title="Ocho o más caracteres"
+                                            <input type="password" class="form-control" placeholder="Contraseña" pattern=".{8,}" title="Ocho o más caracteres"
                                                    id="password" name="password" {% if action=='insert' %} required {% endif %}>
                                             <div class="invalid-feedback" id="passwordMessage">
                                                 Ocho o más caracteres.
@@ -62,7 +62,7 @@
                                     <div class="form-group">
                                         <label for="password-id-icon">Confirmar contraseña</label>
                                         <div class="position-relative">
-                                            <input type="password" class="form-control" placeholder="Password" pattern=".{8,}" title="Ocho o más caracteres"
+                                            <input type="password" class="form-control" placeholder="Confirmar contraseña" pattern=".{8,}" title="Ocho o más caracteres"
                                                    id="password-confirmation" name="password-confirmation" {% if action=='insert' %} required {% endif %}>
                                             <div class="invalid-feedback" id="valPasswordMessage">
                                                 Ocho o más caracteres
@@ -100,8 +100,6 @@
                             event.preventDefault()
                             event.stopPropagation()
                         }
-                        console.log(form["password"].value);
-                        console.log(form["password-confirmation"].value);
                         //Validacion de password
                         if (form["action"].value == 'insert' &&  form["password"].value == ''){
                             document.getElementById('passwordMessage').innerHTML = 'Este valor es requerido';

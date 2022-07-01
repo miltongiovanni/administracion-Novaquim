@@ -40,5 +40,7 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/forgot-password, roles: PUBLIC_ACCESS }
         - { path: ^/send-passcode, roles: PUBLIC_ACCESS }
+        - { path: ^/check-passcode, roles: PUBLIC_ACCESS }
+        - { path: ^/reset-password, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

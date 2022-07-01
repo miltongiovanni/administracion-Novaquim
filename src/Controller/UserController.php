@@ -32,17 +32,6 @@ class UserController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        /*$user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-        }*/
 
         return $this->renderForm('user/new.html.twig', [
             'action' => 'insert',
@@ -101,32 +90,7 @@ class UserController extends AbstractController
 
         // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
-//check email  IMPORTANT
-        /*if ($email = $request->request->get('email', false)) {
-            if ($followId == 0) {
-                if ($soiAppSuppliersUsersRepository->findOneBy(['email' => $email]) != null) {
-                    $response = new JsonResponse(['idUser' => $user->getIdUser(), 'success' => false, 'message' => $this->ocTranslator->trans('users.exist.error')]);
-                    return $response;
-                }
-            }
-            if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $user->setEmail(trim($email));
-                $user->setUsername(trim($email));
-            } else {
-                $response = new JsonResponse(['idUser' => $user->getIdUser(), 'success' => false, 'message' => $this->ocTranslator->trans('users.email.send.error')]);
-                return $response;
-            }
 
-
-        }*/
-
-        /*$form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-        }*/
         if ($action=='insert'){
             $this->addFlash('success', 'Usuario creado correctamente');
         }else{

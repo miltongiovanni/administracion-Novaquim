@@ -135,7 +135,6 @@ $("div#image_1_upload").dropzone({
             //$('div.dz-success').remove();
             $('#img-product').attr('src', imgUrl);
             this.removeFile(file);
-            console.log(imgUrl);
             $('#dropzoneTitle').hide();
             $('#img-preview').show();
             $('#image_1').val(response.location);
@@ -157,7 +156,6 @@ $("div#image_2_upload").dropzone({
             //$('div.dz-success').remove();
             $('#img-product2').attr('src', imgUrl);
             this.removeFile(file);
-            console.log(imgUrl);
             $('#dropzoneTitle2').hide();
             $('#img-preview2').show();
             $('#image_2').val(response.location);
@@ -179,7 +177,6 @@ $("div#image_3_upload").dropzone({
             //$('div.dz-success').remove();
             $('#img-product3').attr('src', imgUrl);
             this.removeFile(file);
-            console.log(imgUrl);
             $('#dropzoneTitle3').hide();
             $('#img-preview3').show();
             $('#image_3').val(response.location);

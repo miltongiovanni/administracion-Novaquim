@@ -18,7 +18,6 @@ $("div#background_image_upload").dropzone({
             //$('div.dz-success').remove();
             $('#img-background').attr('src', imgUrl);
             this.removeFile(file);
-            console.log(imgUrl);
             $('#dropzoneTitle').hide();
             $('#img-preview').show();
             $('#background_image').val(response.location);

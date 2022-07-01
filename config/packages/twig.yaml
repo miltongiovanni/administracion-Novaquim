@@ -2,6 +2,9 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         app_url: '%env(APP_URL)%'
+    paths:
+        # point this wherever your images live
+        '%kernel.project_dir%/assets/images': images
 when@test:
     twig:
         strict_variables: true
