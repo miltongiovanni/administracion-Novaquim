@@ -16,12 +16,12 @@ import 'tinymce/plugins/code';
 import 'tinymce/plugins/image';
 
 import 'tinymce/plugins/help';
-import 'tinymce/plugins/hr';
-import 'tinymce/plugins/paste';
+//import 'tinymce/plugins/hr';
+//import 'tinymce/plugins/paste';
 import 'tinymce/plugins/nonbreaking';
 import 'tinymce/plugins/media';
 import 'tinymce/plugins/image';
-import 'tinymce/plugins/imagetools';
+//import 'tinymce/plugins/imagetools';
 import 'tinymce/plugins/preview';
 
 import 'tinymce/plugins/emoticons';
