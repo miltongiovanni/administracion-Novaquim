@@ -10,6 +10,8 @@ Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
 
+    // public path used by the web server to access the output path
+    .setPublicPath('/build')
     .copyFiles({
         from: './assets/images',
 
@@ -30,12 +32,17 @@ Encore
     // copy tinymce's lang
     .copyFiles({
         from: './assets/js/langs',
-        to: 'Langs/[path]/[name].[ext]'
+        to: 'langs/[path]/[name].[ext]'
     })
-    // public path used by the web server to access the output path
-    .setPublicPath('/build')
-
-
+    .copyFiles({
+        from: 'node_modules/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
+    // copy tinymce's help files
+    .copyFiles({
+        from: 'node_modules/tinymce/plugins/help/js/i18n/keynav',
+        to: 'plugins/help/js/i18n/keynav/[path]/[name].[ext]'
+    })
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
