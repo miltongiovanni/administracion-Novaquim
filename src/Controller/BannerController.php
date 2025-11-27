@@ -34,7 +34,7 @@ class BannerController extends AbstractController
      */
     public function new(Request $request, BannerRepository $bannerRepository): Response
     {
-        return $this->renderForm('banner/new.html.twig', [
+        return $this->render('banner/new.html.twig', [
             'action' => 'insert',
         ]);
 
@@ -57,7 +57,7 @@ class BannerController extends AbstractController
     {
         $banner = $bannerRepository->find($id);
 
-        return $this->renderForm('banner/edit.html.twig', [
+        return $this->render('banner/edit.html.twig', [
             'banner' => $banner,
             'action' => 'update',
         ]);

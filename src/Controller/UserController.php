@@ -33,7 +33,7 @@ class UserController extends AbstractController
     public function new(Request $request): Response
     {
 
-        return $this->renderForm('user/new.html.twig', [
+        return $this->render('user/new.html.twig', [
             'action' => 'insert',
         ]);
     }
@@ -56,7 +56,7 @@ class UserController extends AbstractController
         $currentUser = $this->getUser($id);
         $user = $userRepository->find($id);
 
-        return $this->renderForm('user/edit.html.twig', [
+        return $this->render('user/edit.html.twig', [
             'user' => $user,
             'action' => 'update',
         ]);

@@ -31,7 +31,7 @@ class CategoryController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        return $this->renderForm('category/new.html.twig', [
+        return $this->render('category/new.html.twig', [
             'action' => 'insert',
         ]);
     }
@@ -53,7 +53,7 @@ class CategoryController extends AbstractController
     {
         $category = $categoryRepository->find($id);
 
-        return $this->renderForm('category/edit.html.twig', [
+        return $this->render('category/edit.html.twig', [
             'category' => $category,
             'action' => 'update',
         ]);

@@ -33,7 +33,7 @@ class ProductController extends AbstractController
      */
     public function new(Request $request, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
     {
-        return $this->renderForm('product/new.html.twig', [
+        return $this->render('product/new.html.twig', [
             'action' => 'insert',
             'categorias' => $categoryRepository->findAll(),
             'mercados' => $mercadoRepository->findAll(),
@@ -57,7 +57,7 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->find($id);
 
-        return $this->renderForm('product/edit.html.twig', [
+        return $this->render('product/edit.html.twig', [
             'product' => $product,
             'categorias' => $categoryRepository->findAll(),
             'mercados' => $mercadoRepository->findAll(),

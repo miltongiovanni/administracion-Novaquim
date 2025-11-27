@@ -31,7 +31,7 @@ class ConfigurationController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        return $this->renderForm('configuration/new.html.twig', [
+        return $this->render('configuration/new.html.twig', [
             'action' => 'insert',
         ]);
     }
@@ -53,7 +53,7 @@ class ConfigurationController extends AbstractController
     {
         $configuration = $configurationRepository->find($id);
 
-        return $this->renderForm('configuration/edit.html.twig', [
+        return $this->render('configuration/edit.html.twig', [
             'configuration' => $configuration,
             'action' => 'update',
         ]);

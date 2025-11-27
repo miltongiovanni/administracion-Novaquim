@@ -31,7 +31,7 @@ class MercadoController extends AbstractController
      */
     public function new(Request $request, MercadoRepository $mercadoRepository): Response
     {
-        return $this->renderForm('mercado/new.html.twig', [
+        return $this->render('mercado/new.html.twig', [
             'action' => 'insert',
         ]);
     }
@@ -53,7 +53,7 @@ class MercadoController extends AbstractController
     {
         $mercado = $mercadoRepository->find($id);
 
-        return $this->renderForm('mercado/edit.html.twig', [
+        return $this->render('mercado/edit.html.twig', [
             'mercado' => $mercado,
             'action' => 'update',
         ]);

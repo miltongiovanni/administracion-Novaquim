@@ -49,7 +49,7 @@
                                                     Seleccione la categoría
                                                 </option>
                                                 {%  for categoria in categorias %}
-                                                    <option value="{{ categoria.id }}" {% if producto.categoria is defined and producto.categoria == categoria.id %} selected {% endif %}>
+                                                    <option value="{{ categoria.id }}" {% if product.category.id is defined and product.category.id == categoria.id %} selected {% endif %}>
                                                         {{ categoria.name }}
                                                     </option>
                                                 {% endfor %}
@@ -69,11 +69,11 @@
                                         <label for="mercado_id">Mercado</label>
                                         <fieldset class="form-group">
                                             <select class="form-select" id="mercado_id" name="mercado_id" required>
-                                                <option value="" disabled {% if action=='insert' or producto.mercado is not defined %}selected{% endif %}>
+                                                <option value="" disabled {% if action=='insert' or product.mercado is not defined %}selected{% endif %}>
                                                     Seleccione el mercado
                                                 </option>
                                                 {%  for mercado in mercados %}
-                                                    <option value="{{ mercado.id }}" {% if producto.mercado is defined and producto.mercado == mercado.id %} selected {% endif %}>
+                                                    <option value="{{ mercado.id }}" {% if product.mercado.id is defined and product.mercado.id == mercado.id %} selected {% endif %}>
                                                         {{ mercado.name }}
                                                     </option>
                                                 {% endfor %}
@@ -97,7 +97,7 @@
                                                       required>{% if product.description is defined %}{{ product.description }}{% endif %}</textarea>
                                             <div class="valid-feedback"></div>
                                             <div class="invalid-feedback" id="metaDescriptionMessage">
-                                                Escriba una pequeña descripción del producto
+                                                Escriba una pequeña descripción del product
                                             </div>
                                         </div>
                                     </div>

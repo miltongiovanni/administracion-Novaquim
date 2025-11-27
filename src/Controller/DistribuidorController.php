@@ -30,7 +30,7 @@ class DistribuidorController extends AbstractController
      */
     public function new(Request $request, DistribuidorRepository $distribuidorRepository): Response
     {
-        return $this->renderForm('distribuidor/new.html.twig', [
+        return $this->render('distribuidor/new.html.twig', [
             'action' => 'insert',
         ]);
     }
@@ -52,7 +52,7 @@ class DistribuidorController extends AbstractController
     {
         $distribuidor = $distribuidorRepository->find($id);
 
-        return $this->renderForm('distribuidor/edit.html.twig', [
+        return $this->render('distribuidor/edit.html.twig', [
             'distribuidor' => $distribuidor,
             'action' => 'update',
         ]);
