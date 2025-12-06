@@ -23,6 +23,7 @@
         <tr>
             <th>Id</th>
             <th>Nombre Contacto</th>
+            <th>Fecha Contacto</th>
             <th>Organización</th>
             <th>Email Contacto</th>
             <th>Teléfono</th>
@@ -36,6 +37,7 @@
             <tr>
                 <td>{{ contacto.id }}</td>
                 <td>{{ contacto.nombreContacto }}</td>
+                <td>{{ contacto.fechaContacto|date("Y-m-d") }}</td>
                 <td>{{ contacto.organizacion }}</td>
                 <td>{{ contacto.emailContacto }}</td>
                 <td>{{ contacto.telefono }}</td>
