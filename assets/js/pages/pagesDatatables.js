@@ -107,7 +107,7 @@ $(document).ready(function () {
             "infoFiltered": "(Filtrado de _MAX_ en total)"
 
         },
-        "order": [[ 0, "desc" ]]
+        "order": [[ 0, "asc" ]]
     });
     $('#bannersDatatable').DataTable({
         "columnDefs":

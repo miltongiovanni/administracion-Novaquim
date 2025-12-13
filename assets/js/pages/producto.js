@@ -48,10 +48,11 @@ import "dropzone/dist/dropzone.css";
 
 tinymce.init({
     selector: '.editor',
+    content_css: '/build/product.css',
     language: 'es_419',
     height: 500,
     toolbar: 'undo redo | styleselect forecolor backcolor| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent hr | link image media emoticons | preview fullscreen code table | help',
-    plugins: 'advlist code help hr image imagetools link lists media nonbreaking paste table preview',
+    plugins: 'advlist code help hr image link lists media nonbreaking paste table preview',
     relative_urls: false,
     remove_script_host: false,
     images_upload_url: '/uploadImage',
