@@ -12,6 +12,9 @@
     {% endblock %}
 
     {% block javascripts %}
+        <script>
+            window.TINYMCE_CONTENT_CSS = '{{ asset('build/product.css') }}';
+        </script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>

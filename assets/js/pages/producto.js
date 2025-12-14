@@ -48,7 +48,7 @@ import "dropzone/dist/dropzone.css";
 
 tinymce.init({
     selector: '.editor',
-    content_css: '/build/product.css',
+    content_css: window.TINYMCE_CONTENT_CSS,
     language: 'es_419',
     height: 500,
     toolbar: 'undo redo | styleselect forecolor backcolor| bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent hr | link image media emoticons | preview fullscreen code table | help',
