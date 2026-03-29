@@ -7,32 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=MercadoRepository::class)
- */
+#[ORM\Entity(repositoryClass: MercadoRepository::class)]
 class Mercado
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $slug;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $slug = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="mercado")
-     */
-    private $products;
+    #[ORM\OneToMany(mappedBy: 'mercado', targetEntity: Product::class)]
+    private ArrayCollection|array $products;
 
     public function __construct()
     {
@@ -88,11 +78,9 @@ class Mercado
 
     public function removeProduct(Product $product): self
     {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getMercado() === $this) {
-                $product->setMercado(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->products->removeElement($product) && $product->getMercado() === $this) {
+            $product->setMercado(null);
         }
 
         return $this;

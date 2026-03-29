@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -12,48 +13,42 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function __construct(private readonly AuthenticationUtils $authenticationUtils, private readonly UserRepository $userRepository, private readonly EntityManagerInterface $entityManager, private readonly MailerInterface $mailer, private readonly UserPasswordHasherInterface $passwordHasher)
+    {
+    }
+    #[Route(path: '/login', name: 'app_login')]
+    public function login(): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
-
         // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $this->authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
+        $lastUsername = $this->authenticationUtils->getLastUsername();
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'title' => 'Acceso', 'web_title' => 'Industrias Novaquim S.A.S.']);
     }
 
-    /**
-     * @Route("/forgot-password", name="app_forgot_password")
-     */
-    public function forgotPassword(UserRepository $userRepository): Response
+    #[Route(path: '/forgot-password', name: 'app_forgot_password')]
+    public function forgotPassword(): Response
     {
-
         return $this->render('security/forgot-password.html.twig', ['title' => 'Contraseña olvidada', 'web_title' => 'Industrias Novaquim S.A.S.']);
     }
 
-    /**
-     * @Route("/send-passcode", name="app_send_passcode")
-     */
-    public function sendPasscode(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    #[Route(path: '/send-passcode', name: 'app_send_passcode')]
+    public function sendPasscode(Request $request): Response
     {
         $userEmail = $request->request->get('email');
-        $passcode = rand(10000, 49999) + rand(1, 50000);
-        $user = $userRepository->findOneBy(['email' => $userEmail]);
+        $passcode = random_int(10000, 49999) + random_int(1, 50000);
+        $user = $this->userRepository->findOneBy(['email' => $userEmail]);
         $user->setPasscode($passcode);
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
         $email = ((new TemplatedEmail()))
             ->from(new Address('contacto@novaquim.com', 'Industrias Novaquim S.A.S.'))
             ->to($userEmail)
@@ -72,7 +67,7 @@ class SecurityController extends AbstractController
                 'passcode' => $passcode,
             ]);
 
-        $mailer->send($email);
+        $this->mailer->send($email);
         return $this->render('security/send-passcode.html.twig',
             [
                 'title' => 'Recuperación de contraseña',
@@ -82,14 +77,12 @@ class SecurityController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/check-passcode", name="app_check_passcode")
-     */
-    public function checkPasscode(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    #[Route(path: '/check-passcode', name: 'app_check_passcode')]
+    public function checkPasscode(Request $request): Response
     {
         $userEmail = $request->request->get('email');
         $passcode = $request->request->get('passcode');
-        $user = $userRepository->findOneBy(['email' => $userEmail]);//dd($user->getPasscode(), $passcode)
+        $user = $this->userRepository->findOneBy(['email' => $userEmail]);//dd($user->getPasscode(), $passcode)
 
         ;
         if ($user->getPasscode() != $passcode) {
@@ -115,23 +108,21 @@ class SecurityController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/reset-password", name="app_reset_password")
-     */
-    public function resetPassword(Request $request, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    #[Route(path: '/reset-password', name: 'app_reset_password')]
+    public function resetPassword(Request $request): Response
     {
         $userEmail = $request->request->get('email');
         $password = $request->request->get('password');
         $password_confirmation = $request->request->get('password-confirmation');
         if ($password == $password_confirmation) {
-            $user = $userRepository->findOneBy(['email' => $userEmail]);
-            $hashedPassword = $passwordHasher->hashPassword(
+            $user = $this->userRepository->findOneBy(['email' => $userEmail]);
+            $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 $password
             );
             $user->setPassword($hashedPassword);
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
             $this->addFlash('success', 'Contraseña actualizada correctamente');
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
 
@@ -147,10 +138,8 @@ class SecurityController extends AbstractController
 
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
-    public function logout()
+    #[Route(path: '/logout', name: 'app_logout')]
+    public function logout(): RedirectResponse
     {
         //throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
         return $this->redirectToRoute('app_login');

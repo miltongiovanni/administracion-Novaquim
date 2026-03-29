@@ -5,68 +5,44 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
- */
+#[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $meta_title;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $meta_title = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $meta_description;
+    #[ORM\Column(type: 'text')]
+    private ?string $meta_description = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $image_1;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $image_1 = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image_2;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image_2 = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image_3;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image_3 = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
+    #[ORM\Column(type: 'text')]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    private ?Category $category = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $slug;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $slug = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Mercado::class, inversedBy="products")
-     */
-    private $mercado;
+    #[ORM\ManyToOne(targetEntity: Mercado::class, inversedBy: 'products')]
+    private ?Mercado $mercado = null;
 
     public function getId(): ?int
     {

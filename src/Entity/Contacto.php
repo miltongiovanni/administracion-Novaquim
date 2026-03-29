@@ -2,65 +2,44 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use App\Repository\ContactoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ContactoRepository::class)
- */
+#[ORM\Entity(repositoryClass: ContactoRepository::class)]
 class Contacto
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nombreContacto;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $nombreContacto = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $organizacion;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $organizacion = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $emailContacto;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $emailContacto = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $telefono;
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private ?string $telefono = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $celular;
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private ?string $celular = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $tipoConsulta;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $tipoConsulta = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $mensaje;
+    #[ORM\Column(type: 'text')]
+    private ?string $mensaje = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $aceptaPolitica;
+    #[ORM\Column(type: 'integer')]
+    private ?int $aceptaPolitica = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $fecha_contacto;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $fecha_contacto = null;
 
     public function getId(): ?int
     {
@@ -163,12 +142,12 @@ class Contacto
         return $this;
     }
 
-    public function getFechaContacto(): ?\DateTimeInterface
+    public function getFechaContacto(): ?DateTimeInterface
     {
         return $this->fecha_contacto;
     }
 
-    public function setFechaContacto(?\DateTimeInterface $fecha_contacto): self
+    public function setFechaContacto(?DateTimeInterface $fecha_contacto): self
     {
         $this->fecha_contacto = $fecha_contacto;
 

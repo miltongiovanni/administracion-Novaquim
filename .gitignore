@@ -28,3 +28,7 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 public/favicon.ico
 public/uploads/images/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

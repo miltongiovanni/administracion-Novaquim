@@ -3,93 +3,71 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/user")
- */
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="user_index", methods={"GET"})
-     */
-    public function index(UserRepository $userRepository): Response
+    public function __construct(private readonly UserRepository $userRepository, private readonly UserPasswordHasherInterface $passwordHasher, private readonly EntityManagerInterface $entityManager)
+    {
+    }
+    #[Route(path: '/user/', name: 'user_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $this->userRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/new", name="user_new", methods={"GET"})
-     */
-    public function new(Request $request): Response
+    #[Route(path: '/user/new', name: 'user_new', methods: ['GET'])]
+    public function new(): Response
     {
-
         return $this->render('user/new.html.twig', [
             'action' => 'insert',
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
-     */
+    #[Route(path: '/user/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET"})
-     */
-    public function edit(Request $request, int $id, UserRepository $userRepository): Response
+    #[Route(path: '/user/{id}/edit', name: 'user_edit', methods: ['GET'])]
+    public function edit(int $id): Response
     {
-        $currentUser = $this->getUser($id);
-        $user = $userRepository->find($id);
+        $this->getUser();
+        $user = $this->userRepository->find($id);
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'action' => 'update',
         ]);
     }
-
-    /**
-     * @Route("/{id}/update", name="user_update", methods={"POST"})
-     */
-    public function update(Request $request, int $id, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    #[Route(path: '/user/{id}/update', name: 'user_update', methods: ['POST'])]
+    public function update(Request $request, int $id): Response
     {
-        if ($id == 0) {
-            $user = new User();
-        } else {
-            $user = $userRepository->find($id);
-        }
+        $user = $id === 0 ? new User() : $this->userRepository->find($id);
         $action = $request->request->get('action');
         $user->setEmail($request->request->get('email'));
         $user->setRoles([$request->request->get('role')]);
         $plaintextPassword = $request->request->get('password', false);
         $plaintextPasswordConfirmation = $request->request->get('password-confirmation', false);
-        if ($plaintextPassword) {
-            if ($plaintextPassword == $plaintextPasswordConfirmation) {
-                $hashedPassword = $passwordHasher->hashPassword(
-                    $user,
-                    $plaintextPassword
-                );
-                $user->setPassword($hashedPassword);
-            }
+        if ($plaintextPassword && $plaintextPassword == $plaintextPasswordConfirmation) {
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $user,
+                $plaintextPassword
+            );
+            $user->setPassword($hashedPassword);
         }
-        $entityManager->persist($user);
+        $this->entityManager->persist($user);
 
         // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         if ($action=='insert'){
             $this->addFlash('success', 'Usuario creado correctamente');
@@ -101,14 +79,11 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
 
     }
-
-    /**
-     * @Route("/{id}", name="user_delete", methods={"POST"})
-     */
-    public function delete(Request $request, User $user, UserRepository  $userRepository): Response
+    #[Route(path: '/user/{id}', name: 'user_delete', methods: ['POST'])]
+    public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $userRepository->remove($user);
+            $this->userRepository->remove($user);
         }
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);

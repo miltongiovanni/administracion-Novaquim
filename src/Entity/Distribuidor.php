@@ -5,57 +5,37 @@ namespace App\Entity;
 use App\Repository\DistribuidorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=DistribuidorRepository::class)
- */
+#[ORM\Entity(repositoryClass: DistribuidorRepository::class)]
 class Distribuidor
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $distribuidor;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $distribuidor = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $contacto;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $contacto = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $telefono;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $telefono = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $celular;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $celular = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $direccion;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $direccion = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=6)
-     */
-    private $longitud;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 6)]
+    private ?string $longitud = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=6)
-     */
-    private $latitud;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 6)]
+    private ?string $latitud = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $estado;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $estado = null;
 
     public function getId(): ?int
     {

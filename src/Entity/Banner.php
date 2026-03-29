@@ -5,37 +5,25 @@ namespace App\Entity;
 use App\Repository\BannerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=BannerRepository::class)
- */
+#[ORM\Entity(repositoryClass: BannerRepository::class)]
 class Banner
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $subtitle;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $subtitle = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $background_image;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $background_image = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $front_image;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $front_image = null;
 
     public function getId(): ?int
     {

@@ -3,80 +3,61 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/category")
- */
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/", name="category_index", methods={"GET"})
-     */
-    public function index(CategoryRepository $categoryRepository): Response
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly EntityManagerInterface $entityManager)
+    {
+    }
+    #[Route(path: '/category/', name: 'category_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('category/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $this->categoryRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/new", name="category_new", methods={"GET"})
-     */
-    public function new(Request $request): Response
+    #[Route(path: '/category/new', name: 'category_new', methods: ['GET'])]
+    public function new(): Response
     {
         return $this->render('category/new.html.twig', [
             'action' => 'insert',
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="category_show", methods={"GET"})
-     */
+    #[Route(path: '/category/{id}', name: 'category_show', methods: ['GET'])]
     public function show(Category $category): Response
     {
         return $this->render('category/show.html.twig', [
             'category' => $category,
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="category_edit", methods={"GET"})
-     */
-    public function edit(Request $request,  int $id, CategoryRepository $categoryRepository): Response
+    #[Route(path: '/category/{id}/edit', name: 'category_edit', methods: ['GET'])]
+    public function edit(int $id): Response
     {
-        $category = $categoryRepository->find($id);
+        $category = $this->categoryRepository->find($id);
 
         return $this->render('category/edit.html.twig', [
             'category' => $category,
             'action' => 'update',
         ]);
     }
-
-    /**
-     * @Route("/{id}/update", name="category_update", methods={"POST"})
-     */
-    public function update(Request $request, int $id, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
+    #[Route(path: '/category/{id}/update', name: 'category_update', methods: ['POST'])]
+    public function update(Request $request, int $id): Response
     {
-        if ($id == 0) {
-            $category = new Category();
-        } else {
-            $category = $categoryRepository->find($id);
-        }
+        $category = $id === 0 ? new Category() : $this->categoryRepository->find($id);
         $action = $request->request->get('action');
         $category->setName($request->request->get('name'));
         $category->setSlug($request->request->get('slug'));
 
-        $entityManager->persist($category);
+        $this->entityManager->persist($category);
 
         // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         if ($action=='insert'){
             $this->addFlash('success', 'Categoría creada correctamente');
@@ -88,13 +69,11 @@ class CategoryController extends AbstractController
         return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
 
     }
-    /**
-     * @Route("/{id}", name="category_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    #[Route(path: '/category/{id}', name: 'category_delete', methods: ['POST'])]
+    public function delete(Request $request, Category $category): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $categoryRepository->remove($category);
+            $this->categoryRepository->remove($category);
         }
 
         return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);

@@ -7,16 +7,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
 {
-private $targetDirectory;
-private $slugger;
-
-public function __construct($targetDirectory, SluggerInterface $slugger)
+public function __construct(private $targetDirectory, private readonly SluggerInterface $slugger)
 {
-$this->targetDirectory = $targetDirectory;
-$this->slugger = $slugger;
 }
 
-public function upload(UploadedFile $file)
+public function upload(UploadedFile $file): string
 {
 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 $safeFilename = $this->slugger->slug($originalFilename);
@@ -24,7 +19,7 @@ $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
 try {
 $file->move($this->getTargetDirectory(), $fileName);
-} catch (FileException $e) {
+} catch (FileException) {
 // ... handle exception if something happens during file upload
 }
 
