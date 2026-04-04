@@ -3,8 +3,6 @@
 $primary: #435ebe;
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:100,300,400|Nunito:300,400,600,700,800");
 // the ~ allows you to reference things in node_modules
-@import "~bootstrap/scss/bootstrap";
-@import "~bootstrap-icons/font/bootstrap-icons.css";
 /*
 ====== TABLE OF CONTENTS =======
 1. Bootstrap & Variables Inside
@@ -35,6 +33,8 @@ $primary: #435ebe;
 
  */
 
+@import '../../vendor/twbs/bootstrap/scss/bootstrap';
+@import "../vendor/bootstrap-icons/font/bootstrap-icons.min.css";
 // 0. Mixins
 @import "./mixins/navbar";
 
@@ -97,9 +97,21 @@ $primary: #435ebe;
 // - 2.18. icons
 @import "./components/icons";
 
-// - 2.19. Auth
-@import "./pages/auth";
 
 // 4.0 Layout
 @import "./layouts/main.scss";
 @import "./utilities";
+
+
+.parsley-error span{
+  font-size: 12px;
+}
+
+.input-group.is-invalid .select2-container--default .select2-selection--single {
+  color: #dc3545;
+  border-color: #dc3545 !important;
+}
+
+.input-group.is-invalid .select2-selection__placeholder{
+  color: #dc3545 !important;
+}

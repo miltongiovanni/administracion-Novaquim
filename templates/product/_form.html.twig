@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical needs-validation" method="post" novalidate
+                    <form class="form form-vertical" method="post" data-parsley-validate
                           action="{% if product.id is defined %}{{ path('product_update', {'id':  product.id }) }}{% else %}{{ path('product_update', {'id':  0 }) }}{% endif %}"
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
@@ -16,10 +16,6 @@
                                             <input type="text" class="form-control" id="title" name="title"
                                                    required
                                                    value="{% if product.title is defined %}{{ product.title }}{% endif %}">
-                                            <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback" id="titleMessage">
-                                                Este valor es requerido
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -31,10 +27,6 @@
                                         <input type="text" class="form-control"
                                                id="slug" name="slug" required
                                                value="{% if product.slug is defined %}{{ product.slug }}{% endif %}">
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback" id="valueMessage">
-                                            Este valor es requerido
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -43,21 +35,17 @@
                                 <div class="col-12">
                                     <div class="form-group has-icon-left">
                                         <label for="category_id">Categoría</label>
-                                        <fieldset class="form-group">
-                                            <select class="form-select" id="category_id" name="category_id" required>
-                                                <option value="" disabled {% if action=='insert' %}selected{% endif %}>
-                                                    Seleccione la categoría
+                                        <select class="form-select" id="category_id" name="category_id" required>
+                                            <option value="" disabled {% if action=='insert' %}selected{% endif %}>
+                                                Seleccione la categoría
+                                            </option>
+                                            {%  for categoria in categorias %}
+                                                <option value="{{ categoria.id }}" {% if product.category.id is defined and product.category.id == categoria.id %} selected {% endif %}>
+                                                    {{ categoria.name }}
                                                 </option>
-                                                {%  for categoria in categorias %}
-                                                    <option value="{{ categoria.id }}" {% if product.category.id is defined and product.category.id == categoria.id %} selected {% endif %}>
-                                                        {{ categoria.name }}
-                                                    </option>
-                                                {% endfor %}
-                                            </select>
-                                            <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback">
-                                                Seleccione una categoría.
-                                            </div>
+                                            {% endfor %}
+                                        </select>
+                                        <fieldset class="form-group">
                                         </fieldset>
                                     </div>
                                 </div>
@@ -67,22 +55,16 @@
                                 <div class="col-12">
                                     <div class="form-group has-icon-left">
                                         <label for="mercado_id">Mercado</label>
-                                        <fieldset class="form-group">
-                                            <select class="form-select" id="mercado_id" name="mercado_id" required>
-                                                <option value="" disabled {% if action=='insert' or product.mercado is not defined %}selected{% endif %}>
-                                                    Seleccione el mercado
+                                        <select class="form-select" id="mercado_id" name="mercado_id" required>
+                                            <option value="" disabled {% if action=='insert' or product.mercado is not defined %}selected{% endif %}>
+                                                Seleccione el mercado
+                                            </option>
+                                            {%  for mercado in mercados %}
+                                                <option value="{{ mercado.id }}" {% if product.mercado.id is defined and product.mercado.id == mercado.id %} selected {% endif %}>
+                                                    {{ mercado.name }}
                                                 </option>
-                                                {%  for mercado in mercados %}
-                                                    <option value="{{ mercado.id }}" {% if product.mercado.id is defined and product.mercado.id == mercado.id %} selected {% endif %}>
-                                                        {{ mercado.name }}
-                                                    </option>
-                                                {% endfor %}
-                                            </select>
-                                            <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback">
-                                                Seleccione un mercado.
-                                            </div>
-                                        </fieldset>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +79,7 @@
                                                       required>{% if product.description is defined %}{{ product.description }}{% endif %}</textarea>
                                             <div class="valid-feedback"></div>
                                             <div class="invalid-feedback" id="metaDescriptionMessage">
-                                                Escriba una pequeña descripción del product
+                                                Escriba una pequeña descripción del producto
                                             </div>
                                         </div>
                                     </div>
@@ -109,21 +91,19 @@
                                         <label for="image_1">Imagen</label>
                                         <div class="row align-items-center ms-0">
                                             <div id="image_1_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
-                                                <div id="dropzoneTitle" class="dz-clickable" style="display: {% if product.getImage1() is defined and product.getImage1()!='' %} none {% else %} block {% endif %}">
+                                                <div id="dropzoneTitle" class="dz-clickable" style="display: {% if product.getImage1() is defined and product.getImage1() != '' %} none {% else %} block {% endif %}">
                                                     <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
                                                     <div class="text-center">Arrastrar y soltar la imagen aquí</div>
                                                     <div class="text-center">o</div>
                                                     <div class="text-center">Haga clic aquí para buscar la imagen</div>
                                                 </div>
                                                 <div id="img-preview" style="display: {% if product.getImage1() is defined  and product.getImage1()!=''%} block {% else %} none {% endif %}">
-                                                    <img id="img-product" src="{% if product.getImage1() is defined  and product.getImage1()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage1() }}{% endif %}" class="img-product" alt="img">
+                                                    <img id="img-product" src="{% if product.getImage1() is defined  and product.getImage1() != ''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage1() }}{% endif %}" class="img-product" alt="img">
                                                 </div>
 
                                             </div>
                                             <div class="position-relative has-validation col-sm-8">
-                                                <input type="text" class="form-control" id="image_1" name="image_1"
-                                                       required
-                                                       value="{% if product.getImage1() is defined and product.getImage1()!='' %}{{ product.getImage1() }}{% endif %}">
+                                                <input type="text" class="form-control" id="image_1" name="image_1" required value="{{ product.getImage1() ?? '' }}">
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback" id="titleImagen1">
                                                     Por lo menos una imagen es requerida
@@ -141,20 +121,20 @@
                                         <label for="image_2">Imagen</label>
                                         <div class="row align-items-center ms-0">
                                             <div id="image_2_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
-                                                <div id="dropzoneTitle2" class="dz-clickable" style="display: {% if product.getImage2() is defined %} none {% else %} block {% endif %}">
+                                                <div id="dropzoneTitle2" class="dz-clickable" style="display: {% if product.getImage2() is defined  and product.getImage2()!=''%} none {% else %} block {% endif %}">
                                                     <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
                                                     <div class="text-center">Arrastrar y soltar la imagen aquí</div>
                                                     <div class="text-center">o</div>
                                                     <div class="text-center">Haga clic aquí para buscar la imagen</div>
                                                 </div>
-                                                <div id="img-preview2" style="display: {% if product.getImage2() is defined %} block {% else %} none {% endif %}">
+                                                <div id="img-preview2" style="display: {% if product.getImage2() is defined and product.getImage2()!='' %} block {% else %} none {% endif %}">
                                                     <img id="img-product2" src="{% if product.getImage2() is defined  and product.getImage2()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage2() }}{% endif %}" class="img-product" alt="img">
                                                 </div>
 
                                             </div>
                                             <div class="position-relative col-sm-8">
                                                 <input type="text" class="form-control" id="image_2" name="image_2"
-                                                       value="{% if product.getImage2() is defined %}{{ product.getImage2() }}{% endif %}">
+                                                       value="{{ product.getImage2() ?? '' }}">
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback" id="titleMessage">
                                                     Este valor es requerido
@@ -172,20 +152,20 @@
                                         <label for="image_3">Imagen</label>
                                         <div class="row align-items-center ms-0">
                                             <div id="image_3_upload" class="image-upload col-sm-4 d-flex justify-content-center align-items-center pt-0 " data-base-url="{{ app_url }}">
-                                                <div id="dropzoneTitle3" class="dz-clickable" style="display: {% if product.getImage3() is defined %} none {% else %} block {% endif %}">
+                                                <div id="dropzoneTitle3" class="dz-clickable" style="display: {% if product.getImage3() is defined and product.getImage3()!='' %} none {% else %} block {% endif %}">
                                                     <div class="text-center"><i class="bi bi-upload fs-2"></i></div>
                                                     <div class="text-center">Arrastrar y soltar la imagen aquí</div>
                                                     <div class="text-center">o</div>
                                                     <div class="text-center">Haga clic aquí para buscar la imagen</div>
                                                 </div>
-                                                <div id="img-preview3" style="display: {% if product.getImage3() is defined %} block {% else %} none {% endif %}">
+                                                <div id="img-preview3" style="display: {% if product.getImage3() is defined and product.getImage3()!='' %} block {% else %} none {% endif %}">
                                                     <img id="img-product3" src="{% if product.getImage3() is defined  and product.getImage3()!=''%} {{ app_url}}{{ 'uploads/images/'}}{{ product.getImage3() }}{% endif %}" class="img-product" alt="img">
                                                 </div>
 
                                             </div>
                                             <div class="position-relative col-sm-8">
                                                 <input type="text" class="form-control" id="image_3" name="image_3"
-                                                       value="{% if product.getImage3() is defined %}{{ product.getImage3() }}{% endif %}">
+                                                       value="{{ product.getImage3() ?? ''}}">
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback" id="titleMessage">
                                                     Este valor es requerido
@@ -243,23 +223,3 @@
         </div>
     </div>
 </div>
-{% block js %}
-    <script>
-        (function () {
-            'use strict'
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-    </script>
-{% endblock %}

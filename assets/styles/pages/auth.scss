@@ -1,3 +1,4 @@
+@import "../variables";
 body {
     background-color: white;
 }
@@ -7,7 +8,7 @@ body {
     
     #auth-right {
         height: 100%;
-        background:  url(../../images/bg/4853433.jpg),linear-gradient(90deg,#2d499d,#3f5491);
+        background:  url(../../images/bg/4853433.png),linear-gradient(90deg,#2d499d,#3f5491);
     }
     #auth-left {
         padding: 2rem 8rem;
@@ -26,6 +27,32 @@ body {
             img {
                 width: 100%;
                 height: auto;
+            }
+        }
+        .input-group{
+            .input-group-text{
+                background-color: #ffffff;
+                i{
+                    font-size: 1.6rem;
+                    line-height: 1;
+                    height: 1.6rem;
+                    width: 1.2rem;
+                    color: #6c7b85;
+                }
+            }
+            .icon-left {
+                border-right-color: transparent;
+                border-right-width: 0;
+            }
+            .icon-right{
+                border-left-color: transparent;
+                border-left-width: 0;
+            }
+            .form-control{
+                border-left-color: white;
+            }
+            .form-control.has-icon-right{
+                border-right-color: white;
             }
         }
         @media screen and (max-width: 767px) {

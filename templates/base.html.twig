@@ -8,14 +8,11 @@
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
     {% endblock %}
 
     {% block javascripts %}
-        <script>
-            window.TINYMCE_CONTENT_CSS = '{{ asset('build/product.css') }}';
-        </script>
-        {{ encore_entry_script_tags('app') }}
+
     {% endblock %}
 </head>
 <body>
@@ -106,7 +103,7 @@
             {% endfor %}
             {% block content %}{% endblock %}
             <footer>
-                <div class="footer clearfix mb-0 text-muted">
+                <div class="footer pt-4 clearfix mb-0 text-muted">
                     <div class="float-start">
                         <p>{{ "now"|date("Y") }} &copy; Industrias Novaquim</p>
                     </div>

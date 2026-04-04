@@ -2,6 +2,13 @@
 
 {% block title %}{{ title }} - {{ web_title }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% block importmap %}{{ importmap(['app', 'parsley' ]) }}{% endblock %}
+{% endblock %}
 {% block content %}
     <div class="row h-100">
         <div class="col-lg-5 col-12">
@@ -10,7 +17,7 @@
                     <img src="{{ asset('build/images/logo/LogoNova1.jpg') }}" alt="Logo">
                 </div>
                 <h1 class="auth-title">Iniciar sesión</h1>
-                <form method="post">
+                <form method="post" class="form form-vertical" data-parsley-validate id="login-form">
                     {% if error %}
                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     {% endif %}
@@ -27,26 +34,33 @@
                         </div>
                     {% endfor %}
 
-                    <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="email" class="form-control form-control-xl" placeholder="Usuario" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
-                        <div class="form-control-icon">
-                            <i class="bi bi-person"></i>
+
+                    <div class="form-group mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text icon-left"><i class="bi bi-person"></i></span>
+                            <input type="email" class="form-control form-control-xl" placeholder="Usuario" value="{{ last_username }}" name="email" id="inputEmail" data-parsley-required="true"
+                                   autofocus>
                         </div>
                     </div>
-                    <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="password" class="form-control form-control-xl" placeholder="Contraseña" name="password" id="inputPassword" autocomplete="current-password" required>
-                        <div class="form-control-icon">
-                            <i class="bi bi-shield-lock"></i>
+
+                    <div class="form-group mb-3">
+                        <div class="input-group ">
+                            <span class="input-group-text icon-left"><i class="bi bi-shield-lock"></i></span>
+                            <input type="password" class="form-control has-icon-right form-control-xl" placeholder="Contraseña" name="password" id="inputPassword" autocomplete="current-password"
+                                   data-parsley-required="true">
+                            <span class="input-group-text icon-right"><i class="bi bi-eye"></i></span>
                         </div>
                     </div>
+
+
                     <button class="btn btn-primary btn-block btn-lg shadow-lg mt-4">Iniciar sesión</button>
-                    {#<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    {# <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
                     <label for="inputEmail">Email</label>
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
                            autocomplete="email" required autofocus>
                     <label for="inputPassword">Password</label>
                     <input type="password" name="password" id="inputPassword" class="form-control"
-                           autocomplete="current-password" required>#}
+                           autocomplete="current-password" required> #}
 
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
@@ -63,9 +77,9 @@
                     </div>
                     #}
 
-                    {#<button class="btn btn-lg btn-primary" type="submit">
+                    {# <button class="btn btn-lg btn-primary" type="submit">
                         Sign in
-                    </button>#}
+                    </button> #}
                 </form>
                 <div class="text-center mt-4 text-lg fs-4">
                     <p><a class="font-bold" href="{{ path('app_forgot_password') }}">Contraseña olvidada?</a></p>

@@ -2,7 +2,7 @@
 
 {% block title %}Product{% endblock %}
 
-{% block body %}
+{% block content %}
     <h2>Product</h2>
 
     <table class="table">
@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ product.description }}</td>
+                <td>{{ product.description | raw }}</td>
             </tr>
         </tbody>
     </table>

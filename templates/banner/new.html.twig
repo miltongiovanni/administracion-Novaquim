@@ -4,13 +4,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
-    {{ encore_entry_link_tags('banners') }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/banner.scss') }}">
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('banner') }}
+    {% block importmap %}{{ importmap(['app' , 'parsley', 'banner' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

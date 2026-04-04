@@ -2,6 +2,14 @@
 
 {% block title %}Variable de configuración{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% block importmap %}{{ importmap(['app', 'sweetalert' ]) }}{% endblock %}
+{% endblock %}
+
 {% block content %}
     <h2>Variable de configuración</h2>
 

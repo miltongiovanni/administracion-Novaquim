@@ -73,7 +73,8 @@ class ConfigurationController extends AbstractController
     public function delete(Request $request, Configuration $configuration): Response
     {
         if ($this->isCsrfTokenValid('delete'.$configuration->getId(), $request->request->get('_token'))) {
-            $this->configurationRepository->remove($configuration);
+            $this->entityManager->remove($configuration);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('configuration_index', [], Response::HTTP_SEE_OTHER);

@@ -2,10 +2,17 @@
 
 {% block title %}Nueva variable de configuración{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% block importmap %}{{ importmap(['app', 'formValidation' ]) }}{% endblock %}
+{% endblock %}
 {% block content %}
-    <h2 class="ps-3">Nueva variable de configuración</h2>
+    <h2 class="">Nueva variable de configuración</h2>
 
     {{ include('configuration/_form.html.twig') }}
 
-    <a class="btn btn-primary ms-3" href="{{ path('configuration_index') }}">Volver a la lista</a>
+    <a class="btn btn-primary" href="{{ path('configuration_index') }}">Volver a la lista</a>
 {% endblock %}

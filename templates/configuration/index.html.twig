@@ -2,9 +2,12 @@
 
 {% block title %}Lista de variables de configuración{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('pagesDatatables') }}
+    {% block importmap %}{{ importmap(['app', 'pagesDatatables' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}

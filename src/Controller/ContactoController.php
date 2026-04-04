@@ -58,15 +58,15 @@ class ContactoController extends AbstractController
 
         $j = 2;
         foreach ($contactos as $contacto) {
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $j, $contacto->getId());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $j, $contacto->getNombreContacto());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(3, $j, $contacto->getOrganizacion());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(4, $j, $contacto->getEmailContacto());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(5, $j, $contacto->getTelefono());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(6, $j, $contacto->getCelular());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(7, $j, $contacto->getTipoConsulta());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(8, $j, $contacto->getMensaje());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(9, $j++, $contacto->getFechaContacto());
+            $spreadsheet->getActiveSheet()->setCellValue([1, $j], $contacto->getId());
+            $spreadsheet->getActiveSheet()->setCellValue([2, $j], $contacto->getNombreContacto());
+            $spreadsheet->getActiveSheet()->setCellValue([3, $j], $contacto->getOrganizacion());
+            $spreadsheet->getActiveSheet()->setCellValue([4, $j], $contacto->getEmailContacto());
+            $spreadsheet->getActiveSheet()->setCellValue([5, $j], $contacto->getTelefono());
+            $spreadsheet->getActiveSheet()->setCellValue([6, $j], $contacto->getCelular());
+            $spreadsheet->getActiveSheet()->setCellValue([7, $j], $contacto->getTipoConsulta());
+            $spreadsheet->getActiveSheet()->setCellValue([8, $j], $contacto->getMensaje());
+            $spreadsheet->getActiveSheet()->setCellValue([9, $j++], $contacto->getFechaContacto());
         }
 
         for ($i = 'A'; $i <= $spreadsheet->getActiveSheet()->getHighestColumn(); $i++) {

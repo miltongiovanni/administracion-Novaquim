@@ -4,14 +4,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
-    {{ encore_entry_link_tags('product') }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/product.scss') }}">
 {% endblock %}
-
-
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('producto') }}
+    {% block importmap %}{{ importmap(['app' , 'parsley', 'producto', 'sweetalert' ]) }}{% endblock %}
 {% endblock %}
 
 {% block content %}
