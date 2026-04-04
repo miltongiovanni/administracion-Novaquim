@@ -19,6 +19,11 @@ framework:
     php_errors:
         log: true
 
+    property_info:
+        # El valor recomendado (y el que será por defecto en v8) es true.
+        # Esto permite que Symfony extraiga información de tipos directamente
+        # desde los argumentos de tu __construct.
+        with_constructor_extractor: true
 when@test:
     framework:
         test: true
