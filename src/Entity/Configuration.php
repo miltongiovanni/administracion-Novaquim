@@ -5,27 +5,19 @@ namespace App\Entity;
 use App\Repository\ConfigurationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ConfigurationRepository::class)
- */
+#[ORM\Entity(repositoryClass: ConfigurationRepository::class)]
 class Configuration
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $value;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $value = null;
 
     public function getId(): ?int
     {

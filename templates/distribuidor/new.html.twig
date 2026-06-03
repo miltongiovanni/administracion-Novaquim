@@ -2,6 +2,14 @@
 
 {% block title %}Nuevo distribuidor{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% block importmap %}{{ importmap(['app' , 'parsley' ]) }}{% endblock %}
+{% endblock %}
+
 {% block content %}
     <h1>Agregar Distribuidor</h1>
 

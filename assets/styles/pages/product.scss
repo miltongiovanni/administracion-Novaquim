@@ -53,3 +53,28 @@ body {
   display: block;
   margin:auto;
 }
+.sizes {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.size {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.size img {
+  max-height: 40px;
+  width: auto;
+  height: auto;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .sizes {
+    justify-content: center;
+  }
+}

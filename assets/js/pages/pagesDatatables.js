@@ -1,5 +1,11 @@
-$(document).ready(function () {
-    $('#usersDatatable').DataTable({
+import DataTable from 'datatables.net-bs5';
+
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+
+import languageEsCol from 'datatables.net-plugins/i18n/es-CO.mjs';
+
+$(function () {
+    let usersDatatable = new DataTable("#usersDatatable",{
         "columnDefs":
             [
                 {
@@ -11,23 +17,10 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
     });
-    $('#configurationsDatatable').DataTable({
+
+    let configurationsDatatable = new DataTable('#configurationsDatatable', {
         "columnDefs":
             [
                 {
@@ -35,23 +28,10 @@ $(document).ready(function () {
                     "className": 'dt-body-center'
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
     });
-    $('#categoriesDatatable').DataTable({
+
+    let categoriesDatatable = new DataTable('#categoriesDatatable', {
         "columnDefs":
             [
                 {
@@ -64,23 +44,10 @@ $(document).ready(function () {
                     "searchable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
     });
-    $('#productosDatatable').DataTable({
+
+    let productosDatatable = new DataTable('#productosDatatable', {
         "columnDefs":
             [
                 {
@@ -107,9 +74,10 @@ $(document).ready(function () {
             "infoFiltered": "(Filtrado de _MAX_ en total)"
 
         },
-        "order": [[ 0, "desc" ]]
+        "order": [[ 0, "asc" ]]
     });
-    $('#bannersDatatable').DataTable({
+
+    let bannersDatatable = new DataTable('#bannersDatatable', {
         "columnDefs":
             [
                 {
@@ -121,25 +89,11 @@ $(document).ready(function () {
                     "orderable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
         "order": [[ 1, "asc" ]]
     });
 
-    $('#mercadosDatatable').DataTable({
+    let mercadosDatatable = new DataTable('#mercadosDatatable', {
         "columnDefs":
             [
                 {
@@ -152,24 +106,10 @@ $(document).ready(function () {
                     "searchable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
     });
 
-    $('#contactosDatatable').DataTable({
+    let contactosDatatable = new DataTable('#contactosDatatable', {
         "columnDefs":
             [
                 {
@@ -182,25 +122,11 @@ $(document).ready(function () {
                 //     "searchable": false
                 // }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
         "order": [[ 0, "desc" ]]
     });
 
-    $('#distribuidoresDatatable').DataTable({
+    let distribuidoresDatatable = new DataTable('#distribuidoresDatatable', {
         "columnDefs":
             [
                 {
@@ -213,20 +139,6 @@ $(document).ready(function () {
                     "searchable": false
                 }
             ],
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ datos por página",
-            "zeroRecords": "Lo siento no encontró nada",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay datos disponibles",
-            "search": "Búsqueda:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-            "infoFiltered": "(Filtrado de _MAX_ en total)"
-
-        },
+        "language": languageEsCol,
     });
 });

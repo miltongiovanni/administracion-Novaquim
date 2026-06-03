@@ -8,7 +8,7 @@
 @use 'sass:math';
 
 // Mazer Variables
-@import "~bootstrap/scss/functions";
+@import '../../vendor/twbs/bootstrap/scss/functions';
 
 $theme-colors-light: (
   'primary': #ebf3ff,

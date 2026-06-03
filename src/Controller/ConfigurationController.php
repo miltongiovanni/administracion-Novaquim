@@ -3,80 +3,61 @@
 namespace App\Controller;
 
 use App\Entity\Configuration;
-use App\Form\ConfigurationType;
 use App\Repository\ConfigurationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/configuration")
- */
 class ConfigurationController extends AbstractController
 {
-    /**
-     * @Route("/", name="configuration_index", methods={"GET"})
-     */
-    public function index(ConfigurationRepository $configurationRepository): Response
+    public function __construct(private readonly ConfigurationRepository $configurationRepository, private readonly EntityManagerInterface $entityManager)
+    {
+    }
+    #[Route(path: '/configuration/', name: 'configuration_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('configuration/index.html.twig', [
-            'configurations' => $configurationRepository->findAll(),
+            'configurations' => $this->configurationRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/new", name="configuration_new", methods={"GET"})
-     */
-    public function new(Request $request): Response
+    #[Route(path: '/configuration/new', name: 'configuration_new', methods: ['GET'])]
+    public function new(): Response
     {
         return $this->render('configuration/new.html.twig', [
             'action' => 'insert',
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="configuration_show", methods={"GET"})
-     */
+    #[Route(path: '/configuration/{id}', name: 'configuration_show', methods: ['GET'])]
     public function show(Configuration $configuration): Response
     {
         return $this->render('configuration/show.html.twig', [
             'configuration' => $configuration,
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="configuration_edit", methods={"GET"})
-     */
-    public function edit(Request $request, int $id, ConfigurationRepository $configurationRepository): Response
+    #[Route(path: '/configuration/{id}/edit', name: 'configuration_edit', methods: ['GET'])]
+    public function edit(int $id): Response
     {
-        $configuration = $configurationRepository->find($id);
+        $configuration = $this->configurationRepository->find($id);
 
         return $this->render('configuration/edit.html.twig', [
             'configuration' => $configuration,
             'action' => 'update',
         ]);
     }
-
-    /**
-     * @Route("/{id}/update", name="configuration_update", methods={"POST"})
-     */
-    public function update(Request $request, int $id, EntityManagerInterface $entityManager, ConfigurationRepository $configurationRepository): Response
+    #[Route(path: '/configuration/{id}/update', name: 'configuration_update', methods: ['POST'])]
+    public function update(Request $request, int $id): Response
     {
-        if ($id == 0) {
-            $configuration = new Configuration();
-        } else {
-            $configuration = $configurationRepository->find($id);
-        }
+        $configuration = $id === 0 ? new Configuration() : $this->configurationRepository->find($id);
         $action = $request->request->get('action');
         $configuration->setDescription($request->request->get('description'));
         $configuration->setValue($request->request->get('value'));
 
-        $entityManager->persist($configuration);
+        $this->entityManager->persist($configuration);
 
         // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         if ($action=='insert'){
             $this->addFlash('success', 'Configuración creada correctamente');
@@ -88,13 +69,12 @@ class ConfigurationController extends AbstractController
         return $this->redirectToRoute('configuration_index', [], Response::HTTP_SEE_OTHER);
 
     }
-    /**
-     * @Route("/{id}", name="configuration_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Configuration $configuration, ConfigurationRepository $configurationRepository): Response
+    #[Route(path: '/configuration/{id}', name: 'configuration_delete', methods: ['POST'])]
+    public function delete(Request $request, Configuration $configuration): Response
     {
         if ($this->isCsrfTokenValid('delete'.$configuration->getId(), $request->request->get('_token'))) {
-            $configurationRepository->remove($configuration);
+            $this->entityManager->remove($configuration);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('configuration_index', [], Response::HTTP_SEE_OTHER);

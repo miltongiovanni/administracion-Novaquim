@@ -2,16 +2,15 @@
 
 {% block title %}Lista de productos{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    {{ encore_entry_link_tags('product') }}
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('pagesDatatables') }}
+    {% block importmap %}{{ importmap(['app', 'pagesDatatables' ]) }}{% endblock %}
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/product.scss') }}">
+{% endblock %}
+
 
 {% block content %}
     <h2>Lista de productos</h2>
@@ -43,7 +42,6 @@
                             Acciones
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ path('product_show', {'id': product.id}) }}">Ver</a></li>
                             <li><a class="dropdown-item" href="{{ path('product_edit', {'id': product.id}) }}">Editar</a></li>
                         </ul>
                     </div>

@@ -2,6 +2,14 @@
 
 {% block title %}Nueva categoría{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% block importmap %}{{ importmap(['app' , 'parsley' ]) }}{% endblock %}
+{% endblock %}
+
 {% block content %}
     <h2 class="ps-3">Nueva categoría</h2>
 

@@ -8,65 +8,48 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/distribuidor")
- */
 class DistribuidorController extends AbstractController
 {
-    /**
-     * @Route("/", name="distribuidor_index", methods={"GET"})
-     */
-    public function index(DistribuidorRepository $distribuidorRepository): Response
+    public function __construct(private readonly DistribuidorRepository $distribuidorRepository, private readonly EntityManagerInterface $entityManager)
+    {
+    }
+    #[Route(path: '/distribuidor/', name: 'distribuidor_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('distribuidor/index.html.twig', [
-            'distribuidors' => $distribuidorRepository->findAll(),
+            'distribuidors' => $this->distribuidorRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/new", name="distribuidor_new", methods={"GET"})
-     */
-    public function new(Request $request, DistribuidorRepository $distribuidorRepository): Response
+    #[Route(path: '/distribuidor/new', name: 'distribuidor_new', methods: ['GET'])]
+    public function new(): Response
     {
         return $this->render('distribuidor/new.html.twig', [
             'action' => 'insert',
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="distribuidor_show", methods={"GET"})
-     */
+    #[Route(path: '/distribuidor/{id}', name: 'distribuidor_show', methods: ['GET'])]
     public function show(Distribuidor $distribuidor): Response
     {
         return $this->render('distribuidor/show.html.twig', [
             'distribuidor' => $distribuidor,
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="distribuidor_edit", methods={"GET"})
-     */
-    public function edit(Request $request, int $id, DistribuidorRepository $distribuidorRepository): Response
+    #[Route(path: '/distribuidor/{id}/edit', name: 'distribuidor_edit', methods: ['GET'])]
+    public function edit(int $id): Response
     {
-        $distribuidor = $distribuidorRepository->find($id);
+        $distribuidor = $this->distribuidorRepository->find($id);
 
         return $this->render('distribuidor/edit.html.twig', [
             'distribuidor' => $distribuidor,
             'action' => 'update',
         ]);
     }
-    /**
-     * @Route("/{id}/update", name="distribuidor_update", methods={"POST"})
-     */
-    public function update(Request $request, int $id, EntityManagerInterface $entityManager, DistribuidorRepository $distribuidorRepository): Response
+    #[Route(path: '/distribuidor/{id}/update', name: 'distribuidor_update', methods: ['POST'])]
+    public function update(Request $request, int $id): Response
     {
-        if ($id == 0) {
-            $distribuidor = new Distribuidor();
-        } else {
-            $distribuidor = $distribuidorRepository->find($id);
-        }
+        $distribuidor = $id === 0 ? new Distribuidor() : $this->distribuidorRepository->find($id);
 
         $action = $request->request->get('action');
         $distribuidor->setDistribuidor($request->request->get('distribuidor'));
@@ -78,10 +61,10 @@ class DistribuidorController extends AbstractController
         $distribuidor->setLatitud($request->request->get('latitud'));
         $distribuidor->setEstado($request->request->get('estado') ?? 0);
 
-        $entityManager->persist($distribuidor);
+        $this->entityManager->persist($distribuidor);
 
         // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         if ($action=='insert'){
             $this->addFlash('success', 'Distribuidor creado correctamente');
@@ -92,13 +75,11 @@ class DistribuidorController extends AbstractController
         //$this->addFlash('error', ' Error al actualizar el Usuario');
         return $this->redirectToRoute('distribuidor_index', [], Response::HTTP_SEE_OTHER);
     }
-    /**
-     * @Route("/{id}", name="distribuidor_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Distribuidor $distribuidor, DistribuidorRepository $distribuidorRepository): Response
+    #[Route(path: '/distribuidor/{id}', name: 'distribuidor_delete', methods: ['POST'])]
+    public function delete(Request $request, Distribuidor $distribuidor): Response
     {
         if ($this->isCsrfTokenValid('delete'.$distribuidor->getId(), $request->request->get('_token'))) {
-            $distribuidorRepository->remove($distribuidor, true);
+            $this->distribuidorRepository->remove($distribuidor, true);
         }
 
         return $this->redirectToRoute('distribuidor_index', [], Response::HTTP_SEE_OTHER);

@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical needs-validation" method="post" novalidate
+                    <form class="form form-vertical" method="post" data-parsley-validate
                           action="{% if mercado.id is defined %}{{ path('mercado_update', {'id':  mercado.id }) }}{% else %}{{ path('mercado_update', {'id':  0 }) }}{% endif %}"
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
@@ -16,10 +16,6 @@
                                             <input type="text" class="form-control" id="name" name="name"
                                                    required
                                                    value="{% if mercado.name is defined %}{{ mercado.name }}{% endif %}">
-                                            <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback" id="descriptionMessage">
-                                                Este valor es requerido
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -30,45 +26,21 @@
                                             <input type="text" class="form-control"
                                                    id="slug" name="slug" required
                                                    value="{% if mercado.slug is defined %}{{ mercado.slug }}{% endif %}">
-                                            <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback" id="valueMessage">
-                                                Este valor es requerido
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 d-flex justify-content-end mt-3">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
-                                    <button type="reset"
-                                            class="btn btn-light-secondary me-1 mb-1">Reiniciar
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-3">
+                                <button type="submit" class="btn btn-primary me-1 mb-1">Guardar</button>
+                                <button type="reset"
+                                        class="btn btn-light-secondary me-1 mb-1">Reiniciar
+                                </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% block js %}
-    <script>
-        (function () {
-            'use strict'
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-    </script>
-{% endblock %}

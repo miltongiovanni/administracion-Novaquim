@@ -7,11 +7,11 @@
         <title>{% block title %}{% endblock %}</title>
 
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
+            <link rel="stylesheet" href="{{ asset('styles/pages/auth.scss') }}">
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>

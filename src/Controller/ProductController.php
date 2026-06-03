@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\MercadoRepository;
 use App\Repository\ProductRepository;
@@ -11,74 +10,56 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/product")
- */
 class ProductController extends AbstractController
 {
-    /**
-     * @Route("/", name="product_index", methods={"GET"})
-     */
-    public function index(ProductRepository $productRepository): Response
+    public function __construct(private readonly ProductRepository $productRepository, private readonly CategoryRepository $categoryRepository, private readonly MercadoRepository $mercadoRepository, private readonly EntityManagerInterface $entityManager)
+    {
+    }
+    #[Route(path: '/product/', name: 'product_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $this->productRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/new", name="product_new", methods={"GET"})
-     */
-    public function new(Request $request, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
+    #[Route(path: '/product/new', name: 'product_new', methods: ['GET'])]
+    public function new(): Response
     {
         return $this->render('product/new.html.twig', [
             'action' => 'insert',
-            'categorias' => $categoryRepository->findAll(),
-            'mercados' => $mercadoRepository->findAll(),
+            'categorias' => $this->categoryRepository->findAll(),
+            'mercados' => $this->mercadoRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="product_show", methods={"GET"})
-     */
+    #[Route(path: '/product/{id}', name: 'product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="product_edit", methods={"GET"})
-     */
-    public function edit(Request $request, int $id, ProductRepository $productRepository, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
+    #[Route(path: '/product/{id}/edit', name: 'product_edit', methods: ['GET'])]
+    public function edit(int $id): Response
     {
-        $product = $productRepository->find($id);
+        $product = $this->productRepository->find($id);
 
         return $this->render('product/edit.html.twig', [
             'product' => $product,
-            'categorias' => $categoryRepository->findAll(),
-            'mercados' => $mercadoRepository->findAll(),
+            'categorias' => $this->categoryRepository->findAll(),
+            'mercados' => $this->mercadoRepository->findAll(),
             'action' => 'update',
         ]);
     }
-
-    /**
-     * @Route("/{id}/update", name="product_update", methods={"POST"})
-     */
-    public function update(Request $request, int $id, EntityManagerInterface $entityManager, ProductRepository $productRepository, CategoryRepository $categoryRepository, MercadoRepository $mercadoRepository): Response
+    #[Route(path: '/product/{id}/update', name: 'product_update', methods: ['POST'])]
+    public function update(Request $request, int $id): Response
     {
-        if ($id == 0) {
-            $product = new Product();
-        } else {
-            $product = $productRepository->find($id);
-        }
+        $product = $id === 0 ? new Product() : $this->productRepository->find($id);
         $idCategory = $request->request->get('category_id');
-        $category = $categoryRepository->find($idCategory);
+        $category = $this->categoryRepository->find($idCategory);
         $idMercado = $request->request->get('mercado_id');
-        $mercado = $mercadoRepository->find($idMercado);
+        $mercado = $this->mercadoRepository->find($idMercado);
         $action = $request->request->get('action');
         $product->setTitle($request->request->get('title'));
         $product->setMetaTitle($request->request->get('meta_title'));
@@ -91,10 +72,10 @@ class ProductController extends AbstractController
         $product->setImage2($request->request->get('image_2'));
         $product->setImage3($request->request->get('image_3'));
 
-        $entityManager->persist($product);
+        $this->entityManager->persist($product);
 
         // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         if ($action=='insert'){
             $this->addFlash('success', 'Producto creado correctamente');
@@ -105,16 +86,13 @@ class ProductController extends AbstractController
         //$this->addFlash('error', ' Error al actualizar el Usuario');
         return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
     }
-    /**
-     * @Route("/{id}", name="product_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
+    #[Route(path: '/product/{id}', name: 'product_delete', methods: ['POST'])]
+    public function delete(Request $request, Product $product): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $productRepository->remove($product);
+            $this->productRepository->remove($product);
         }
 
         return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }

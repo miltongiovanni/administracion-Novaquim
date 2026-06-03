@@ -2,7 +2,13 @@
 
 {% block title %}Nuevo usuario{% endblock %}
 
-
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% block importmap %}{{ importmap(['app' , 'parsley' ]) }}{% endblock %}
+{% endblock %}
 {% block content %}
 
 

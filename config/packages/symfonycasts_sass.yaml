@@ -1,0 +1,11 @@
+symfonycasts_sass:
+    root_sass:
+        - 'assets/styles/app.scss'
+        - 'assets/styles/pages/auth.scss'
+        - 'assets/styles/pages/chat.scss'
+        - 'assets/styles/pages/banner.scss'
+        - 'assets/styles/pages/email.scss'
+        - 'assets/styles/pages/error.scss'
+        - 'assets/styles/pages/product.scss'
+        - 'assets/styles/widgets/chat2.scss'
+        - 'assets/styles/widgets/todo.scss'

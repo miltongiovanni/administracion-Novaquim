@@ -2,15 +2,13 @@
 
 {% block title %}Lista de banners{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    {{ encore_entry_link_tags('banners') }}
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('pagesDatatables') }}
+    {% block importmap %}{{ importmap(['app', 'pagesDatatables' ]) }}{% endblock %}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/banner.scss') }}">
 {% endblock %}
 
 {% block content %}
@@ -41,7 +39,6 @@
                             Acciones
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ path('banner_show', {'id': banner.id}) }}">Ver</a></li>
                             <li><a class="dropdown-item" href="{{ path('banner_edit', {'id': banner.id}) }}">Editar</a></li>
                         </ul>
                     </div>

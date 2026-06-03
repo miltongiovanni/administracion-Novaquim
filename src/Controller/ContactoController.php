@@ -3,41 +3,34 @@
 namespace App\Controller;
 
 use App\Entity\Contacto;
-use App\Form\ContactoType;
 use App\Repository\ContactoRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/contacto")
- */
 class ContactoController extends AbstractController
 {
-    /**
-     * @Route("/", name="contacto_index", methods={"GET"})
-     */
-    public function index(ContactoRepository $contactoRepository): Response
+    public function __construct(private readonly ContactoRepository $contactoRepository)
+    {
+    }
+    #[Route('/contacto/', name: 'contacto_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('contacto/index.html.twig', [
-            'contactos' => $contactoRepository->findAll(),
+            'contactos' => $this->contactoRepository->findAll(),
         ]);
     }
-
-
-    /**
-     * @Route("/", name="contacto_export", methods={"POST"})
-     */
-    public function contactosExport(Request $request, ContactoRepository $contactoRepository): Response
+    #[Route('/contacto/', name: 'contacto_export', methods: ['POST'])]
+    public function contactosExport(Request $request): Response
     {
         $fechaInicial = $request->request->get('fecha_inicial');
         $fechaFinal = $request->request->get('fecha_final');
 // Create new Spreadsheet object
         $spreadsheet = new Spreadsheet();
-        $contactos = $contactoRepository->findByDates($fechaInicial, $fechaFinal);
+        $contactos = $this->contactoRepository->findByDates($fechaInicial, $fechaFinal);
 
 // Set document properties
         $spreadsheet->getProperties()->setCreator('Industrias Novaquim SAS')
@@ -65,15 +58,15 @@ class ContactoController extends AbstractController
 
         $j = 2;
         foreach ($contactos as $contacto) {
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(1, $j, $contacto->getId());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(2, $j, $contacto->getNombreContacto());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(3, $j, $contacto->getOrganizacion());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(4, $j, $contacto->getEmailContacto());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(5, $j, $contacto->getTelefono());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(6, $j, $contacto->getCelular());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(7, $j, $contacto->getTipoConsulta());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(8, $j, $contacto->getMensaje());
-            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow(9, $j++, $contacto->getFechaContacto());
+            $spreadsheet->getActiveSheet()->setCellValue([1, $j], $contacto->getId());
+            $spreadsheet->getActiveSheet()->setCellValue([2, $j], $contacto->getNombreContacto());
+            $spreadsheet->getActiveSheet()->setCellValue([3, $j], $contacto->getOrganizacion());
+            $spreadsheet->getActiveSheet()->setCellValue([4, $j], $contacto->getEmailContacto());
+            $spreadsheet->getActiveSheet()->setCellValue([5, $j], $contacto->getTelefono());
+            $spreadsheet->getActiveSheet()->setCellValue([6, $j], $contacto->getCelular());
+            $spreadsheet->getActiveSheet()->setCellValue([7, $j], $contacto->getTipoConsulta());
+            $spreadsheet->getActiveSheet()->setCellValue([8, $j], $contacto->getMensaje());
+            $spreadsheet->getActiveSheet()->setCellValue([9, $j++], $contacto->getFechaContacto());
         }
 
         for ($i = 'A'; $i <= $spreadsheet->getActiveSheet()->getHighestColumn(); $i++) {
@@ -98,6 +91,4 @@ class ContactoController extends AbstractController
         exit;
 
     }
-
-
 }

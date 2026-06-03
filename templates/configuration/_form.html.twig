@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical needs-validation" method="post" novalidate
+                    <form class="form form-vertical needs-validation" method="post" novalidate id="configuration-form"
                           action="{% if configuration.id is defined %}{{ path('configuration_update', {'id':  configuration.id }) }}{% else %}{{ path('configuration_update', {'id':  0 }) }}{% endif %}"
                     >
                         <input type="hidden" name="action" id="action" value="{{ action }}">
@@ -49,35 +49,3 @@
         </div>
     </div>
 </div>
-{% block js %}
-    <script>
-        (function () {
-            'use strict'
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        //Validacion
-                        if (form["description"].value == '') {
-                            document.getElementById('descriptionMessage').innerHTML = 'Este valor es requerido';
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        if (form["value"].value == '') {
-                            document.getElementById('valueMessage').innerHTML = 'Este valor es requerido';
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-    </script>
-{% endblock %}

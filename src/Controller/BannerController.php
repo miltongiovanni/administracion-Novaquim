@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Banner;
 use App\Entity\Product;
-use App\Form\BannerType;
 use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -12,66 +11,48 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/banner")
- */
 class BannerController extends AbstractController
 {
-    /**
-     * @Route("/", name="banner_index", methods={"GET"})
-     */
-    public function index(BannerRepository $bannerRepository): Response
+    public function __construct(private readonly BannerRepository $bannerRepository, private readonly EntityManagerInterface $entityManager)
+    {
+    }
+    #[Route(path: '/banner/', name: 'banner_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('banner/index.html.twig', [
-            'banners' => $bannerRepository->findAll(),
+            'banners' => $this->bannerRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/new", name="banner_new", methods={"GET"})
-     */
-    public function new(Request $request, BannerRepository $bannerRepository): Response
+    #[Route(path: '/banner/new', name: 'banner_new', methods: ['GET'])]
+    public function new(): Response
     {
         return $this->render('banner/new.html.twig', [
             'action' => 'insert',
         ]);
-
     }
-
-    /**
-     * @Route("/{id}", name="banner_show", methods={"GET"})
-     */
+    #[Route(path: '/banner/{id}', name: 'banner_show', methods: ['GET'])]
     public function show(Banner $banner): Response
     {
         return $this->render('banner/show.html.twig', [
             'banner' => $banner,
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="banner_edit", methods={"GET"})
-     */
-    public function edit(Request $request, int $id, BannerRepository $bannerRepository): Response
+    #[Route(path: '/banner/{id}/edit', name: 'banner_edit', methods: ['GET'])]
+    public function edit(int $id): Response
     {
-        $banner = $bannerRepository->find($id);
+        $banner = $this->bannerRepository->find($id);
 
         return $this->render('banner/edit.html.twig', [
             'banner' => $banner,
             'action' => 'update',
         ]);
     }
-    /**
-     * @Route("/{id}/update", name="banner_update", methods={"POST"})
-     */
-    public function update(Request $request, int $id, EntityManagerInterface $entityManager, BannerRepository $bannerRepository): Response
+    #[Route(path: '/banner/{id}/update', name: 'banner_update', methods: ['POST'])]
+    public function update(Request $request, int $id): Response
     {
-        if ($id == 0) {
-            $banner = new Banner();
-        } else {
-            $banner = $bannerRepository->find($id);
-        }
+        $banner = $id === 0 ? new Banner() : $this->bannerRepository->find($id);
 
         $action = $request->request->get('action');
         $banner->setTitle($request->request->get('title'));
@@ -79,10 +60,10 @@ class BannerController extends AbstractController
         $banner->setBackgroundImage($request->request->get('background_image'));
         $banner->setFrontImage($request->request->get('front_image'));
 
-        $entityManager->persist($banner);
+        $this->entityManager->persist($banner);
 
         // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         if ($action=='insert'){
             $this->addFlash('success', 'Banner creado correctamente');
@@ -93,14 +74,11 @@ class BannerController extends AbstractController
         //$this->addFlash('error', ' Error al actualizar el Usuario');
         return $this->redirectToRoute('banner_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    /**
-     * @Route("/{id}", name="banner_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Banner $banner, BannerRepository $bannerRepository): Response
+    #[Route(path: '/banner/{id}', name: 'banner_delete', methods: ['POST'])]
+    public function delete(Request $request, Banner $banner): Response
     {
         if ($this->isCsrfTokenValid('delete'.$banner->getId(), $request->request->get('_token'))) {
-            $bannerRepository->remove($banner);
+            $this->bannerRepository->remove($banner);
         }
 
         return $this->redirectToRoute('banner_index', [], Response::HTTP_SEE_OTHER);
